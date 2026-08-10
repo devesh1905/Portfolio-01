@@ -496,14 +496,24 @@ export default function PortfolioPage() {
                 </a>
 
                 {portfolioData.personalInfo.resumeUrl ? (
-                  <a
-                    href={portfolioData.personalInfo.resumeUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-mono text-[10px] uppercase tracking-widest text-zinc-400 hover:text-white transition-colors flex items-center gap-1.5 py-2 border-b border-white/10 hover:border-white"
-                  >
-                    <FileText size={12} /> Retrieve CV
-                  </a>
+                  <div className="flex items-center gap-3">
+                    <a
+                      href={portfolioData.personalInfo.resumeUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-mono text-[10px] uppercase tracking-widest text-zinc-400 hover:text-white transition-colors flex items-center gap-1.5 py-2 border-b border-white/10 hover:border-white"
+                    >
+                      <FileText size={12} /> Retrieve CV
+                    </a>
+                    <a
+                      href="/Deveshwar_S_Resume.docx"
+                      download="Deveshwar_S_Resume.docx"
+                      className="font-mono text-[9px] uppercase tracking-widest text-zinc-500 hover:text-zinc-300 transition-colors py-2"
+                      title="Download DOCX format"
+                    >
+                      [.DOCX]
+                    </a>
+                  </div>
                 ) : (
                   <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-600 cursor-not-allowed flex items-center gap-1.5">
                     <FileText size={12} /> CV (Locked)
@@ -1462,8 +1472,6 @@ export default function PortfolioPage() {
       <footer className="w-full max-w-6xl mx-auto border-t border-white/5 px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 mt-20 font-mono text-[9px] text-zinc-500 mb-24">
         <div className="flex items-center gap-2">
           <span>© 2026 DEVESHWAR S.</span>
-          <span>//</span>
-          <span>CREATIVE PORTFOLIO</span>
         </div>
         <div className="flex items-center gap-6">
           <span>SMARTABILITY & BUILDFEST '26 WINNER</span>
