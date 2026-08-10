@@ -125,8 +125,8 @@
   "upcomingProjects": [
     {
       "id": "upcoming-1",
-      "title": "Exploring AI in Social Media Management",
-      "description": "Integrating LLM APIs and building automated workflows to process, analyze, and repurpose social media text data for optimized curation."
+      "title": "Exploring Gen AI, Agentic AI and workflows",
+      "description": "Designing autonomous agentic systems, integrating LLM architectures, and orchestrating multi-step AI workflows for automated problem solving and intelligent system execution."
     }
   ]
 }
