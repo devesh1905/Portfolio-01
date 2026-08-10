@@ -1,0 +1,132 @@
+{
+  "personalInfo": {
+    "name": "Deveshwar S",
+    "title": "Front-End Developer & B.Tech IT Student",
+    "bio": "I am a second-year Information Technology student focusing on clean front-end development, core data structures, and practical software solutions. I enjoy bridging clean design with solid programming fundamentals to build products that work seamlessly.",
+    "tagline": "Building functional web platforms, real-world client websites, and multi-time hackathon-winning projects.",
+    "location": "Chennai, India",
+    "email": "deveshwars1905@gmail.com",
+    "github": "https://github.com/devesh1905",
+    "linkedin": "https://www.linkedin.com/in/deveshwar-s-19a67b362?utm_source=share_via&utm_content=profile&utm_medium=member_android",
+    "twitter": "",
+    "resumeUrl": ""
+  },
+  "skills": {
+    "languages": [
+      { "name": "Python", "category": "languages" },
+      { "name": "C", "category": "languages" },
+      { "name": "Java", "category": "languages" }
+    ],
+    "frameworks": [
+      { "name": "HTML5", "category": "frameworks" },
+      { "name": "CSS3", "category": "frameworks" },
+      { "name": "JavaScript", "category": "frameworks" },
+      { "name": "Tailwind CSS", "category": "frameworks" }
+    ],
+    "tools": [
+      { "name": "Git & GitHub", "category": "tools" },
+      { "name": "WebSockets", "category": "tools" }
+    ],
+    "databases": []
+  },
+  "projects": [
+    {
+      "id": "etherwave",
+      "title": "EtherWave",
+      "subtitle": "Lossless Audio Streaming Utility",
+      "description": "An open-source desktop application designed to capture system audio via loopback pipelines and stream it to secondary devices over a local network. Built to solve high-latency issues in wireless audio setups.",
+      "status": "Active",
+      "badge": "AUDIO UTILITY",
+      "techStack": ["Python", "WebSockets", "Git"],
+      "features": [
+        "Lossless Raw PCM 16-bit 48kHz audio streaming over local network",
+        "Sub-100ms latency with self-healing buffer compensation algorithms",
+        "Bypasses proprietary client apps using WebSockets and Web Audio API",
+        "Hardware-inspired console with responsive visualizer and volume control"
+      ],
+      "githubUrl": "https://github.com/devesh1905/project-etherwave"
+    },
+    {
+      "id": "audiolens",
+      "title": "AudioLens",
+      "subtitle": "AI Clinical Workup for Audiologists",
+      "description": "A full-featured clinical workup system tailored for audiologists. Provides AI diagnostic assistance across test sections alongside overall clinical report generation.",
+      "status": "Completed",
+      "badge": "HACKATHON WINNER",
+      "techStack": ["Next.js", "TypeScript", "Python", "Gemini AI"],
+      "features": [
+        "Won 1st Place at SmartAbility Hackathon (College)",
+        "Step-by-step AI assistance across 8 diagnostic audiologic test modules",
+        "Automated cross-test correlation and comprehensive PDF report generation",
+        "Deterministic rule-based clinical scoring engine with AI-driven summary insights"
+      ],
+      "githubUrl": "https://github.com/devesh1905"
+    },
+    {
+      "id": "starbell",
+      "title": "Starbell Playschool",
+      "subtitle": "Responsive Educational Website",
+      "description": "A fully custom, responsive website designed and developed for Starbell Playschool. Optimized for fast load times and clean navigation to help parents easily access enrollment information, gallery events, and curriculum details.",
+      "status": "Completed",
+      "badge": "CLIENT WORK",
+      "techStack": ["HTML/CSS", "JavaScript"],
+      "features": [
+        "Vibrant educational layout built with standard semantic structure",
+        "Fast asset loading times and responsive typography layouts",
+        "Secure registration form fields and curriculum download access points"
+      ],
+      "githubUrl": "https://github.com/devesh1905/starbell"
+    },
+    {
+      "id": "fotocode",
+      "title": "Fotocode",
+      "subtitle": "Award-Winning Web Demo",
+      "description": "A high-fidelity landing page and interactive interface built under competition limits. Designed to feature fast navigation layouts, responsive grids, and optimal visual performance across multi-device formats.",
+      "status": "Completed",
+      "badge": "COMPETITION WINNER",
+      "techStack": ["HTML5", "CSS3", "JavaScript"],
+      "features": [
+        "Won 1st Place at the REC Capture & Code Web Competition",
+        "Optimal page load and layout responsiveness under constraint layouts",
+        "Accessible DOM structure with structured visual assets"
+      ],
+      "githubUrl": "https://github.com/devesh1905/fotocode"
+    }
+  ],
+  "achievements": [
+    {
+      "id": "smartability",
+      "title": "SmartAbility Hackathon Winner",
+      "event": "SmartAbility College Hackathon",
+      "badge": "1st Place Winner",
+      "date": "August 2026",
+      "project": "AudioLens",
+      "description": "Won 1st Place for AudioLens, an AI-powered clinical workup platform designed for audiologists with test-by-test AI support and automated comprehensive report generation."
+    },
+    {
+      "id": "buildfest26",
+      "title": "BUILDFEST '26 Hackathon Winner",
+      "event": "BUILDFEST '26",
+      "badge": "Hackathon Winner",
+      "date": "August 2026",
+      "project": "Hackathon Project",
+      "description": "Secured top honors at BUILDFEST '26 for high-impact software execution and solution delivery under intensive competition constraints."
+    },
+    {
+      "id": "fotocode-win",
+      "title": "REC Capture & Code Winner",
+      "event": "Capture & Code Web Competition",
+      "badge": "1st Place",
+      "date": "March 2026",
+      "project": "Fotocode",
+      "description": "Won 1st Place in the college web development competition for building Fotocode, a responsive high-performance web platform."
+    }
+  ],
+  "upcomingProjects": [
+    {
+      "id": "upcoming-1",
+      "title": "Exploring AI in Social Media Management",
+      "description": "Integrating LLM APIs and building automated workflows to process, analyze, and repurpose social media text data for optimized curation."
+    }
+  ]
+}
