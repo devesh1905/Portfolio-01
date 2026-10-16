@@ -606,6 +606,62 @@ export default function PortfolioPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Future Forge Buildathon 2026 */}
+            <div className="glass-card rounded-3xl p-6 sm:p-7 flex flex-col justify-between gap-6 border border-brand-gold/25 relative overflow-hidden group hover:border-brand-gold/40 transition-all">
+              <div className="absolute -top-12 -right-12 w-36 h-36 bg-brand-gold/10 blur-2xl rounded-full"></div>
+              <div className="flex flex-col gap-4 relative z-10">
+                <div className="flex items-center justify-between">
+                  <span className="px-3 py-1 rounded-full text-[9px] font-mono uppercase tracking-widest bg-brand-gold/15 text-brand-gold border border-brand-gold/25 font-bold flex items-center gap-1">
+                    <Trophy size={10} /> 1st Prize
+                  </span>
+                  <span className="font-mono text-[9px] text-zinc-500 uppercase">National Level</span>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <h3 className="font-serif text-xl text-white font-bold tracking-tight">
+                    Future Forge Buildathon 2026
+                  </h3>
+                  <span className="font-mono text-xs text-brand-gold/90 font-medium">Project: Black Onyx</span>
+                </div>
+                <p className="text-zinc-400 text-xs leading-relaxed">
+                  Won the First Prize at the national-level Future Forge Buildathon (VELS Institute of Science, Technology &amp; Advanced Studies) for "The Agent That Survives a Poisoned Tool": a provenance firewall for AI agents, paired with a locally trained small language model that scores whether each tool call fits the user's request.
+                </p>
+              </div>
+              <div className="pt-4 border-t border-white/5 flex items-center justify-between font-mono text-[9px] text-zinc-400 relative z-10">
+                <span className="flex items-center gap-1 text-zinc-300">
+                  <Zap size={11} className="text-brand-gold" /> Agent Security
+                </span>
+                <span className="text-brand-gold font-bold">Oct 2026</span>
+              </div>
+            </div>
+
+            {/* Dreamovation 2.0 */}
+            <div className="glass-card rounded-3xl p-6 sm:p-7 flex flex-col justify-between gap-6 border border-white/10 relative overflow-hidden group hover:border-white/25 transition-all">
+              <div className="absolute -top-12 -right-12 w-36 h-36 bg-violet-500/10 blur-2xl rounded-full"></div>
+              <div className="flex flex-col gap-4 relative z-10">
+                <div className="flex items-center justify-between">
+                  <span className="px-3 py-1 rounded-full text-[9px] font-mono uppercase tracking-widest bg-violet-500/15 text-violet-400 border border-violet-500/25 font-bold flex items-center gap-1">
+                    <Trophy size={10} /> Second Runner-up
+                  </span>
+                  <span className="font-mono text-[9px] text-zinc-500 uppercase">REC IIC</span>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <h3 className="font-serif text-xl text-white font-bold tracking-tight">
+                    Dreamovation 2.0
+                  </h3>
+                  <span className="font-mono text-xs text-violet-400/90 font-medium">Project: FloodLine (Team Nexora)</span>
+                </div>
+                <p className="text-zinc-400 text-xs leading-relaxed">
+                  Second Runner-up in the Hackathon and Business Pitching event run by the Institution's Innovation Council, Rajalakshmi Engineering College, for FloodLine: a ward-level flood-risk and alert system for Chennai with an offline phone app.
+                </p>
+              </div>
+              <div className="pt-4 border-t border-white/5 flex items-center justify-between font-mono text-[9px] text-zinc-400 relative z-10">
+                <span className="flex items-center gap-1 text-zinc-300">
+                  <Zap size={11} className="text-violet-400" /> Hackathon &amp; Pitching
+                </span>
+                <span className="text-violet-400 font-bold">Oct 2026</span>
+              </div>
+            </div>
+
             {/* SmartAbility Hackathon */}
             <div className="glass-card rounded-3xl p-6 sm:p-7 flex flex-col justify-between gap-6 border border-brand-gold/25 relative overflow-hidden group hover:border-brand-gold/40 transition-all">
               <div className="absolute -top-12 -right-12 w-36 h-36 bg-brand-gold/10 blur-2xl rounded-full"></div>
@@ -640,7 +696,7 @@ export default function PortfolioPage() {
               <div className="flex flex-col gap-4 relative z-10">
                 <div className="flex items-center justify-between">
                   <span className="px-3 py-1 rounded-full text-[9px] font-mono uppercase tracking-widest bg-sky-500/15 text-sky-400 border border-sky-500/25 font-bold flex items-center gap-1">
-                    <Trophy size={10} /> Hackathon Winner
+                    <Trophy size={10} /> 2nd Prize
                   </span>
                   <span className="font-mono text-[9px] text-zinc-500 uppercase">BUILDFEST</span>
                 </div>
@@ -648,10 +704,10 @@ export default function PortfolioPage() {
                   <h3 className="font-serif text-xl text-white font-bold tracking-tight">
                     BUILDFEST '26
                   </h3>
-                  <span className="font-mono text-xs text-sky-400/90 font-medium">Hackathon Victory</span>
+                  <span className="font-mono text-xs text-sky-400/90 font-medium">Project: CodeGuard</span>
                 </div>
                 <p className="text-zinc-400 text-xs leading-relaxed">
-                  Secured top honors at BUILDFEST '26 by executing rapid software prototyping, robust system integration, and responsive frontend design under tight constraints.
+                  Won the 2nd Prize at BUILDFEST '26 with CodeGuard, an AI security scanner that finds vulnerabilities in code and proposes reviewable fixes. Sponsored by SecureWorldz (₹20,000 placement training).
                 </p>
               </div>
               <div className="pt-4 border-t border-white/5 flex items-center justify-between font-mono text-[9px] text-zinc-400 relative z-10">
@@ -1083,6 +1139,69 @@ export default function PortfolioPage() {
                 </a>
               </div>
             </div>
+
+            {/* More projects: every config entry that does not have a hand-built block above */}
+            {portfolioData.projects
+              .filter((p) => !["etherwave", "audiolens", "starbell", "fotocode"].includes(p.id))
+              .map((proj) => (
+                <div
+                  key={proj.id}
+                  className="lg:col-span-6 glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between gap-6 relative overflow-hidden transition-all duration-300 hover:border-white/15"
+                >
+                  <div className="flex flex-col gap-4 relative z-10">
+                    <div className="flex items-center justify-between">
+                      <span className="px-3 py-1 rounded-full text-[9px] font-mono uppercase tracking-widest bg-brand-gold/10 text-brand-gold border border-brand-gold/15 font-semibold">
+                        {proj.badge}
+                      </span>
+                      <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest">
+                        {proj.status}
+                      </span>
+                    </div>
+
+                    <div className="flex flex-col gap-1">
+                      <h3 className="font-serif text-2xl text-white font-bold tracking-tight">{proj.title}</h3>
+                      <span className="font-mono text-xs text-zinc-400">{proj.subtitle}</span>
+                    </div>
+
+                    <p className="text-zinc-400 text-sm leading-relaxed">{proj.description}</p>
+
+                    {proj.features && proj.features.length > 0 && (
+                      <div className="flex flex-col gap-2 mt-2">
+                        <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-wider">Features</span>
+                        <ul className="text-xs text-zinc-400 flex flex-col gap-1.5 pl-3 list-disc">
+                          {proj.features.map((feat, i) => (
+                            <li key={i}>{feat}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-white/5 relative z-10">
+                    <div className="flex flex-wrap gap-1.5">
+                      {proj.techStack.map((tech) => (
+                        <span
+                          key={tech}
+                          className="px-2.5 py-0.5 rounded-full font-mono text-[9px] bg-white/5 border border-white/5 text-zinc-400"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+
+                    {proj.githubUrl && (
+                      <a
+                        href={proj.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-4 py-2.5 border border-white/10 rounded-full font-mono text-[9px] uppercase tracking-widest text-zinc-300 hover:text-white hover:bg-white/5 transition-all text-center flex items-center justify-center gap-1.5"
+                      >
+                        <GithubIcon size={11} /> View Code
+                      </a>
+                    )}
+                  </div>
+                </div>
+              ))}
 
             {/* Bento Block 5: Coming up block (Spans 12 columns) */}
             <div className="lg:col-span-12 glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between gap-6 relative overflow-hidden transition-all duration-300 hover:border-white/15">

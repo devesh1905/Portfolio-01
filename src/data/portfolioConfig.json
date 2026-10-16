@@ -13,21 +13,93 @@
   },
   "skills": {
     "languages": [
-      { "name": "Python", "category": "languages" },
-      { "name": "C", "category": "languages" },
-      { "name": "Java", "category": "languages" }
+      {
+        "name": "Python",
+        "category": "languages"
+      },
+      {
+        "name": "C",
+        "category": "languages"
+      },
+      {
+        "name": "Java",
+        "category": "languages"
+      },
+      {
+        "name": "TypeScript",
+        "category": "languages"
+      }
     ],
     "frameworks": [
-      { "name": "HTML5", "category": "frameworks" },
-      { "name": "CSS3", "category": "frameworks" },
-      { "name": "JavaScript", "category": "frameworks" },
-      { "name": "Tailwind CSS", "category": "frameworks" }
+      {
+        "name": "HTML5",
+        "category": "frameworks"
+      },
+      {
+        "name": "CSS3",
+        "category": "frameworks"
+      },
+      {
+        "name": "JavaScript",
+        "category": "frameworks"
+      },
+      {
+        "name": "Tailwind CSS",
+        "category": "frameworks"
+      },
+      {
+        "name": "React",
+        "category": "frameworks"
+      },
+      {
+        "name": "Next.js",
+        "category": "frameworks"
+      },
+      {
+        "name": "Node.js",
+        "category": "frameworks"
+      },
+      {
+        "name": "FastAPI",
+        "category": "frameworks"
+      },
+      {
+        "name": "React Native (Expo)",
+        "category": "frameworks"
+      }
     ],
     "tools": [
-      { "name": "Git & GitHub", "category": "tools" },
-      { "name": "WebSockets", "category": "tools" }
+      {
+        "name": "Git & GitHub",
+        "category": "tools"
+      },
+      {
+        "name": "WebSockets",
+        "category": "tools"
+      },
+      {
+        "name": "Docker",
+        "category": "tools"
+      },
+      {
+        "name": "Gemini API",
+        "category": "tools"
+      }
     ],
-    "databases": []
+    "databases": [
+      {
+        "name": "PostgreSQL",
+        "category": "databases"
+      },
+      {
+        "name": "Supabase",
+        "category": "databases"
+      },
+      {
+        "name": "SQLite",
+        "category": "databases"
+      }
+    ]
   },
   "projects": [
     {
@@ -37,7 +109,11 @@
       "description": "An open-source desktop application designed to capture system audio via loopback pipelines and stream it to secondary devices over a local network. Built to solve high-latency issues in wireless audio setups.",
       "status": "Active",
       "badge": "AUDIO UTILITY",
-      "techStack": ["Python", "WebSockets", "Git"],
+      "techStack": [
+        "Python",
+        "WebSockets",
+        "Git"
+      ],
       "features": [
         "Lossless Raw PCM 16-bit 48kHz audio streaming over local network",
         "Sub-100ms latency with self-healing buffer compensation algorithms",
@@ -53,7 +129,12 @@
       "description": "A full-featured clinical workup system tailored for audiologists. Provides AI diagnostic assistance across test sections alongside overall clinical report generation.",
       "status": "Completed",
       "badge": "HACKATHON WINNER",
-      "techStack": ["Next.js", "TypeScript", "Python", "Gemini AI"],
+      "techStack": [
+        "Next.js",
+        "TypeScript",
+        "Python",
+        "Gemini AI"
+      ],
       "features": [
         "Won 1st Place at SmartAbility Hackathon (College)",
         "Step-by-step AI assistance across 8 diagnostic audiologic test modules",
@@ -69,7 +150,10 @@
       "description": "A fully custom, responsive website designed and developed for Starbell Playschool. Optimized for fast load times and clean navigation to help parents easily access enrollment information, gallery events, and curriculum details.",
       "status": "Completed",
       "badge": "CLIENT WORK",
-      "techStack": ["HTML/CSS", "JavaScript"],
+      "techStack": [
+        "HTML/CSS",
+        "JavaScript"
+      ],
       "features": [
         "Vibrant educational layout built with standard semantic structure",
         "Fast asset loading times and responsive typography layouts",
@@ -84,16 +168,140 @@
       "description": "A high-fidelity landing page and interactive interface built under competition limits. Designed to feature fast navigation layouts, responsive grids, and optimal visual performance across multi-device formats.",
       "status": "Completed",
       "badge": "COMPETITION WINNER",
-      "techStack": ["HTML5", "CSS3", "JavaScript"],
+      "techStack": [
+        "HTML5",
+        "CSS3",
+        "JavaScript"
+      ],
       "features": [
         "Won 1st Place at the REC Capture & Code Web Competition",
         "Optimal page load and layout responsiveness under constraint layouts",
         "Accessible DOM structure with structured visual assets"
       ],
       "githubUrl": "https://github.com/devesh1905/fotocode"
+    },
+    {
+      "id": "blackonyx",
+      "title": "Black Onyx",
+      "subtitle": "Provenance Firewall for AI Agents",
+      "description": "A firewall for tool-using AI agents. Untrusted tool output (email, web page, file) can be read as data but can never choose a destination or action: every value carries its sources and trust level, and a readable policy checks each tool argument at the moment of use. Paired with Laya, a locally trained small language model that gives an advisory score on whether a tool call fits the user's request.",
+      "status": "Completed",
+      "badge": "NATIONAL HACKATHON WINNER",
+      "techStack": [
+        "Python",
+        "Policy Engine",
+        "Small Language Model",
+        "Streamlit"
+      ],
+      "features": [
+        "1st Prize at the Future Forge Buildathon 2026 (national level)",
+        "Deterministic rules blocked all 310 attack runs in the team's benchmark",
+        "Laya: 421M-parameter local model running as an advisory sentinel",
+        "144 automated tests"
+      ],
+      "githubUrl": "https://github.com/devesh1905/black-onyx"
+    },
+    {
+      "id": "floodline",
+      "title": "FloodLine",
+      "subtitle": "Ward-Level Flood Risk & Alerts for Chennai",
+      "description": "A flood-warning system that keeps working when the network does not. Ward-level risk is computed on real city polygons with terrain-derived lowness, an LLM planner assists operators while deterministic rules decide evacuation, and a phone app answers questions offline using an on-device model.",
+      "status": "Completed",
+      "badge": "2ND RUNNER-UP",
+      "techStack": [
+        "FastAPI",
+        "React",
+        "Leaflet",
+        "React Native (Expo)",
+        "Gemini"
+      ],
+      "features": [
+        "Second Runner-up at Dreamovation 2.0 (Team Nexora)",
+        "Risk map, 24-hour timeline and pump/boat response queue",
+        "Photo-based flood-depth estimate with human confirmation",
+        "Offline phone app with on-device Llama 3.2 1B, Tamil support and alerts",
+        "Automated backend and phone tests"
+      ],
+      "githubUrl": ""
+    },
+    {
+      "id": "client-erp",
+      "title": "Supply-Chain & Delivery ERP",
+      "subtitle": "Bilingual Web and Mobile Platform",
+      "description": "An ERP built for an international client to track projects from award to delivery, follow signed delivery certificates, handle accounting, and produce the reports the client specified. One codebase ships as a responsive website and as Android and iOS apps.",
+      "status": "Delivered",
+      "badge": "CLIENT WORK",
+      "techStack": [
+        "React",
+        "TypeScript",
+        "Supabase",
+        "Capacitor"
+      ],
+      "features": [
+        "English, Arabic and Urdu interfaces",
+        "Single codebase for web and native mobile",
+        "Requirements traceability against the client's specification",
+        "19 client-specified reports"
+      ],
+      "githubUrl": ""
+    },
+    {
+      "id": "client-payments",
+      "title": "Course Registration & Payment App",
+      "subtitle": "Bilingual Mobile App",
+      "description": "A mobile app and payment portal for a client: students browse courses, sign in with phone and OTP, accept a contract, and pay by card, bank transfer or a deferred installment plan.",
+      "status": "Delivered",
+      "badge": "CLIENT WORK",
+      "techStack": [
+        "React Native (Expo)",
+        "TypeScript"
+      ],
+      "features": [
+        "English and Arabic with full right-to-left layout",
+        "Card, bank-transfer and installment payment flows",
+        "Invoice and contract PDF export"
+      ],
+      "githubUrl": ""
+    },
+    {
+      "id": "client-pricing",
+      "title": "Multi-Currency Price-Comparison Platform",
+      "subtitle": "Web, Mobile and Admin Prototypes",
+      "description": "A client project: a price-comparison platform with a bilingual (English/Arabic) website, a mobile app prototype and an admin portal, backed by a documented design system.",
+      "status": "Prototype",
+      "badge": "CLIENT WORK",
+      "techStack": [
+        "HTML/CSS",
+        "JavaScript",
+        "Python"
+      ],
+      "features": [
+        "Arabic right-to-left support",
+        "Multi-currency catalog",
+        "Separate admin portal"
+      ],
+      "githubUrl": ""
     }
   ],
   "achievements": [
+    {
+      "id": "futureforge",
+      "title": "Future Forge Buildathon 2026",
+      "event": "Future Forge Buildathon (national level), VELS Institute",
+      "badge": "1st Prize",
+      "date": "October 2026",
+      "project": "Black Onyx",
+      "description": "First Prize for 'The Agent That Survives a Poisoned Tool'."
+    },
+    {
+      "id": "dreamovation",
+      "title": "Dreamovation 2.0",
+      "event": "Hackathon and Business Pitching, REC Institution's Innovation Council",
+      "badge": "Second Runner-up",
+      "date": "October 2026",
+      "project": "FloodLine",
+      "description": "Second Runner-up as Team Nexora."
+    },
     {
       "id": "smartability",
       "title": "SmartAbility Hackathon Winner",
@@ -105,12 +313,12 @@
     },
     {
       "id": "buildfest26",
-      "title": "BUILDFEST '26 Hackathon Winner",
+      "title": "BUILDFEST '26 2nd Prize",
       "event": "BUILDFEST '26",
-      "badge": "Hackathon Winner",
+      "badge": "2nd Prize",
       "date": "August 2026",
-      "project": "Hackathon Project",
-      "description": "Secured top honors at BUILDFEST '26 for high-impact software execution and solution delivery under intensive competition constraints."
+      "project": "CodeGuard",
+      "description": "2nd Prize at BUILDFEST '26, sponsored by SecureWorldz (placement training worth Rs 20,000)."
     },
     {
       "id": "fotocode-win",
