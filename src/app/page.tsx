@@ -531,71 +531,74 @@ export default function PortfolioPage() {
               </motion.div>
             </div>
 
-            {/* Right Column: Floating 3D claymorphic/glassmorphic kinetic vector layout */}
-            <div className="lg:col-span-4 relative h-[300px] w-full flex items-center justify-center select-none">
-              {/* Shifting 3D glass ring */}
-              <motion.div
-                animate={{
-                  y: [0, -15, 0],
-                  rotate: [0, 360],
-                }}
-                transition={{
-                  y: { repeat: Infinity, duration: 6, ease: "easeInOut" },
-                  rotate: { repeat: Infinity, duration: 25, ease: "linear" },
-                }}
-                className="absolute w-44 h-44 rounded-full border-[10px] border-white/5 backdrop-blur-[6px] shadow-2xl flex items-center justify-center"
-                style={{
-                  boxShadow: "inset 0 4px 20px rgba(255,255,255,0.05), 0 20px 40px rgba(0,0,0,0.5)",
-                }}
+            {/* Right Column: win stack in front of an orbiting tech ring */}
+            <div className="lg:col-span-4 relative h-[400px] w-full flex items-center justify-center select-none">
+              {/* Faint glass ring with logo */}
+              <div
+                className="absolute w-56 h-56 rounded-full border-[10px] border-white/5 backdrop-blur-[4px] flex items-center justify-center"
+                style={{ boxShadow: "inset 0 4px 20px rgba(255,255,255,0.05), 0 20px 40px rgba(0,0,0,0.5)" }}
               >
-                {/* Floating inner sphere */}
-                <motion.div
-                  animate={{
-                    scale: [1, 1.15, 1],
-                  }}
-                  transition={{
-                    repeat: Infinity,
-                    duration: 4,
-                    ease: "easeInOut",
-                  }}
-                  className="w-16 h-16 rounded-full bg-gradient-to-tr from-brand-terracotta to-brand-gold opacity-30 blur-[2px]"
-                />
+                <span className="font-serif italic text-4xl font-bold text-white/15">DS.</span>
+              </div>
+
+              {/* Orbiting tech chips */}
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ repeat: Infinity, duration: 40, ease: "linear" }}
+                className="absolute w-0 h-0"
+              >
+                {["Python", "React", "TypeScript", "FastAPI", "Supabase", "Expo"].map((tech, i, arr) => {
+                  const angle = (360 / arr.length) * i;
+                  return (
+                    <div
+                      key={tech}
+                      className="absolute top-0 left-0"
+                      style={{ transform: `rotate(${angle}deg) translateX(150px) rotate(${-angle}deg)` }}
+                    >
+                      <motion.div
+                        animate={{ rotate: -360 }}
+                        transition={{ repeat: Infinity, duration: 40, ease: "linear" }}
+                        className="-translate-x-1/2 -translate-y-1/2 px-3 py-1 rounded-full font-mono text-[9px] uppercase tracking-widest text-zinc-400 bg-white/5 border border-white/10 backdrop-blur-[4px] whitespace-nowrap"
+                      >
+                        {tech}
+                      </motion.div>
+                    </div>
+                  );
+                })}
               </motion.div>
 
-              {/* Shifting claymorphic pill shape */}
-              <motion.div
-                animate={{
-                  x: [0, 20, 0],
-                  y: [0, 25, 0],
-                  rotate: [45, 60, 45],
-                }}
-                transition={{
-                  repeat: Infinity,
-                  duration: 8,
-                  ease: "easeInOut",
-                }}
-                className="absolute top-10 left-12 w-10 h-28 rounded-full bg-gradient-to-b from-white/10 to-transparent border border-white/10 shadow-lg backdrop-blur-[2px]"
-                style={{
-                  boxShadow: "inset 0 4px 10px rgba(255,255,255,0.1), 0 10px 20px rgba(0,0,0,0.3)",
-                }}
-              />
-
-              {/* Champagne gold clay float block */}
-              <motion.div
-                animate={{
-                  x: [0, -25, 0],
-                  y: [0, -15, 0],
-                }}
-                transition={{
-                  repeat: Infinity,
-                  duration: 7,
-                  ease: "easeInOut",
-                }}
-                className="absolute bottom-6 right-8 w-16 h-16 rounded-3xl bg-brand-gold/10 border border-brand-gold/15 backdrop-blur-[4px]"
-                style={{
-                  boxShadow: "inset 0 2px 8px rgba(226, 192, 141, 0.2), 0 15px 30px rgba(0,0,0,0.4)",
-                }}
-              />
+              {/* Win stack */}
+              <div className="relative z-10 flex flex-col gap-3 w-[250px]">
+                {[
+                  { badge: "1st Prize", gold: true, title: "Future Forge Buildathon", note: "National level · Black Onyx", dx: -14, delay: 0 },
+                  { badge: "1st Place", gold: true, title: "SmartAbility Hackathon", note: "AudioLens", dx: 14, delay: 1.2 },
+                  { badge: "Second Runner-up", gold: false, title: "Dreamovation 2.0", note: "FloodLine · Team Nexora", dx: -6, delay: 2.4 },
+                ].map((w) => (
+                  <motion.div
+                    key={w.title}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: [0, -8, 0] }}
+                    transition={{
+                      opacity: { delay: 0.5 + w.delay / 3, duration: 0.6 },
+                      y: { repeat: Infinity, duration: 6, ease: "easeInOut", delay: w.delay },
+                    }}
+                    style={{ marginLeft: w.dx, marginRight: -w.dx }}
+                    className={`glass-card rounded-2xl px-4 py-3 flex flex-col gap-1 border ${
+                      w.gold ? "border-brand-gold/30" : "border-violet-400/25"
+                    }`}
+                  >
+                    <span
+                      className={`font-mono text-[9px] uppercase tracking-widest font-bold flex items-center gap-1 ${
+                        w.gold ? "text-brand-gold" : "text-violet-400"
+                      }`}
+                    >
+                      <Trophy size={10} /> {w.badge}
+                    </span>
+                    <span className="text-sm font-semibold text-white leading-tight">{w.title}</span>
+                    <span className="font-mono text-[9px] text-zinc-500">{w.note}</span>
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
