@@ -15,8 +15,8 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Deveshwar S | Creative Developer & Systems Engineer",
-  description: "Portfolio of Deveshwar S, featuring Project EtherWave (low-latency streaming), Starbell Kids Playschool (production client work), and Fotocode (1st Place Hackathon winner).",
+  title: "Deveshwar S | Full-Stack & AI Developer",
+  description: "Portfolio of Deveshwar S, full-stack and AI developer. National-level hackathon winner (Future Forge Buildathon 2026) with projects including Black Onyx, FloodLine, AudioLens and Project EtherWave.",
   keywords: ["Deveshwar S", "Developer Portfolio", "Project EtherWave", "Starbell", "Fotocode", "Python WASAPI", "Next.js Portfolio", "Flutter Developer", "Chennai Developer"],
   authors: [{ name: "Deveshwar S" }],
 };

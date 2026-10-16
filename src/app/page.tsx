@@ -172,7 +172,7 @@ export default function PortfolioPage() {
   // Scroll Spy to update navigation active tab
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ["about", "achievements", "works", "skills", "contact"];
+      const sections = ["about", "achievements", "works", "journey", "skills", "contact"];
       
       // If we are at the very bottom of the page, force "contact" tab
       if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 50) {
@@ -374,7 +374,7 @@ export default function PortfolioPage() {
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.4, type: "spring", stiffness: 120 }}
-          className="glass-nav rounded-full px-5 py-3.5 flex items-center gap-3 sm:gap-6 border border-white/10 max-w-xl w-full justify-between overflow-x-auto scrollbar-none"
+          className="glass-nav rounded-full px-5 py-3.5 flex items-center gap-3 sm:gap-6 border border-white/10 max-w-2xl w-full justify-between overflow-x-auto scrollbar-none"
         >
           <a
             href="#about"
@@ -404,13 +404,22 @@ export default function PortfolioPage() {
             <span>03/</span> Works
           </a>
           <a
+            href="#journey"
+            onClick={() => setActiveTab("journey")}
+            className={`font-mono text-[10px] uppercase tracking-widest transition-colors flex items-center gap-1.5 whitespace-nowrap ${
+              activeTab === "journey" ? "text-brand-gold font-bold" : "text-zinc-400 hover:text-white"
+            }`}
+          >
+            <span>04/</span> Journey
+          </a>
+          <a
             href="#skills"
             onClick={() => setActiveTab("skills")}
             className={`font-mono text-[10px] uppercase tracking-widest transition-colors flex items-center gap-1.5 whitespace-nowrap ${
               activeTab === "skills" ? "text-brand-gold font-bold" : "text-zinc-400 hover:text-white"
             }`}
           >
-            <span>04/</span> Skills
+            <span>05/</span> Skills
           </a>
           <a
             href="#contact"
@@ -419,7 +428,7 @@ export default function PortfolioPage() {
               activeTab === "contact" ? "text-brand-gold font-bold" : "text-zinc-400 hover:text-white"
             }`}
           >
-            <span>05/</span> Connect
+            <span>06/</span> Contact
           </a>
         </motion.nav>
       </div>
@@ -595,7 +604,7 @@ export default function PortfolioPage() {
         <section id="achievements" className="scroll-mt-24 flex flex-col gap-10">
           <div className="flex flex-col gap-2">
             <span className="font-mono text-[10px] text-brand-gold uppercase tracking-widest font-semibold flex items-center gap-1.5">
-              <Trophy size={12} className="text-brand-gold" /> 02 / Competition Victories
+              <Trophy size={12} className="text-brand-gold" /> 02 / Wins
             </span>
             <h2 className="font-serif text-3xl sm:text-5xl text-white tracking-tight">
               Hackathon Victories & Recognition
@@ -752,7 +761,7 @@ export default function PortfolioPage() {
         <section id="works" className="scroll-mt-24 flex flex-col gap-10">
           <div className="flex flex-col gap-2">
             <span className="font-mono text-[10px] text-brand-terracotta uppercase tracking-widest font-semibold">
-              03 / Engineering Portfolios
+              03 / Works
             </span>
             <h2 className="font-serif text-3xl sm:text-5xl text-white tracking-tight">
               Selected Works
@@ -1236,12 +1245,12 @@ export default function PortfolioPage() {
         </section>
 
         {/* Section 4: Magazine Split Bio / Timeline */}
-        <section className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        <section id="journey" className="scroll-mt-24 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           
           {/* Magazine Bio Text Column (Asymmetrical block) */}
           <div className="lg:col-span-5 flex flex-col gap-6">
             <span className="font-mono text-[10px] text-brand-terracotta uppercase tracking-widest font-semibold">
-              04 / Building with Purpose
+              04 / Journey
             </span>
             
             <h3 className="font-serif text-3xl sm:text-5xl text-white tracking-tight leading-tight">
@@ -1249,11 +1258,11 @@ export default function PortfolioPage() {
             </h3>
 
             <p className="text-zinc-400 text-sm leading-relaxed">
-              My development philosophy is straightforward: build clean, responsive, and functional software. Whether I'm designing an AI diagnostic workflow for medical professionals or low-latency streaming tools, I focus on scalable logic and tactile UI design.
+              I build software that has to work in the real world: web and mobile products for clients, AI agent security, and systems that keep working offline. Whether it is a bilingual business platform, a clinical AI workflow or a flood-alert app, I focus on clean logic, tested behaviour and an interface people can actually use.
             </p>
 
             <p className="text-zinc-400 text-sm leading-relaxed">
-              From college competitions like the SmartAbility Hackathon and REC Capture & Code to BUILDFEST '26, I thrive under tight constraints and high-stakes problem solving.
+              From college events like REC Capture & Code and the SmartAbility Hackathon to BUILDFEST '26, Dreamovation 2.0 and the national-level Future Forge Buildathon, I work best under tight constraints and real problem statements.
             </p>
           </div>
 
@@ -1265,6 +1274,38 @@ export default function PortfolioPage() {
 
             <div className="relative pl-6 border-l border-white/10 flex flex-col gap-10">
               
+              {/* Event 0a: Dreamovation */}
+              <div className="relative">
+                <div className="absolute -left-[30px] top-1.5 w-3 h-3 rounded-full bg-violet-500 shadow-[0_0_8px_#8b5cf6]"></div>
+                <div className="flex flex-col gap-1">
+                  <span className="font-mono text-[9px] text-brand-gold uppercase tracking-widest font-bold">
+                    October 2026
+                  </span>
+                  <h5 className="text-sm font-semibold text-white">
+                    Second Runner-up at Dreamovation 2.0
+                  </h5>
+                  <p className="text-xs text-zinc-500 leading-normal mt-1">
+                    Pitched FloodLine as Team Nexora: a ward-level flood-risk and alert system for Chennai with an offline phone app running an on-device language model.
+                  </p>
+                </div>
+              </div>
+
+              {/* Event 0b: Future Forge */}
+              <div className="relative">
+                <div className="absolute -left-[30px] top-1.5 w-3 h-3 rounded-full bg-brand-gold shadow-[0_0_8px_#e2c08d]"></div>
+                <div className="flex flex-col gap-1">
+                  <span className="font-mono text-[9px] text-brand-gold uppercase tracking-widest font-bold">
+                    October 2026
+                  </span>
+                  <h5 className="text-sm font-semibold text-white">
+                    1st Prize at Future Forge Buildathon 2026 (National Level)
+                  </h5>
+                  <p className="text-xs text-zinc-500 leading-normal mt-1">
+                    Built Black Onyx, a provenance firewall for AI agents with a locally trained sentinel model, for the problem "The Agent That Survives a Poisoned Tool".
+                  </p>
+                </div>
+              </div>
+
               {/* Event 1 */}
               <div className="relative">
                 <div className="absolute -left-[30px] top-1.5 w-3 h-3 rounded-full bg-brand-gold shadow-[0_0_8px_#e2c08d]"></div>
@@ -1289,10 +1330,10 @@ export default function PortfolioPage() {
                     August 2026
                   </span>
                   <h5 className="text-sm font-semibold text-white">
-                    Won BUILDFEST '26 Hackathon
+                    2nd Prize at BUILDFEST '26
                   </h5>
                   <p className="text-xs text-zinc-500 leading-normal mt-1">
-                    Secured top honors at BUILDFEST '26 by building high-impact software solutions under intensive competition timelines.
+                    Built CodeGuard, an AI security scanner that finds vulnerabilities and proposes reviewable fixes. Sponsored by SecureWorldz with placement training worth Rs 20,000.
                   </p>
                 </div>
               </div>
@@ -1355,7 +1396,7 @@ export default function PortfolioPage() {
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div className="flex flex-col gap-2">
               <span className="font-mono text-[10px] text-brand-terracotta uppercase tracking-widest font-semibold">
-                05 / Technical Matrix
+                05 / Skills
               </span>
               <h2 className="font-serif text-3xl sm:text-5xl text-white tracking-tight">
                 Core Competencies
@@ -1414,14 +1455,14 @@ export default function PortfolioPage() {
           </div>
         </section>
 
-        {/* Section 6: Contact Connection Section (Interactive Neumorphic/Glassmorphic Form) */}
+        {/* Section 6: Contact Section (Interactive Neumorphic/Glassmorphic Form) */}
         <section id="contact" className="scroll-mt-24 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           
           {/* Contact Details */}
           <div className="lg:col-span-5 flex flex-col gap-6">
             <div className="flex flex-col gap-2">
               <span className="font-mono text-[10px] text-brand-terracotta uppercase tracking-widest font-semibold">
-                06 / Transmission
+                06 / Contact
               </span>
               <h2 className="font-serif text-3xl sm:text-5xl text-white tracking-tight">
                 Get In Touch
