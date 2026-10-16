@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
+import { motion, AnimatePresence, MotionConfig, useMotionValue, useSpring } from "framer-motion";
 import {
   Mail,
   ExternalLink,
@@ -69,8 +69,6 @@ export default function PortfolioPage() {
   // Project lookups
   const etherwaveProject = portfolioData.projects.find((p) => p.id === "etherwave") || portfolioData.projects[0];
   const audiolensProject = portfolioData.projects.find((p) => p.id === "audiolens") || portfolioData.projects[1];
-  const starbellProject = portfolioData.projects.find((p) => p.id === "starbell") || portfolioData.projects[2];
-  const fotocodeProject = portfolioData.projects.find((p) => p.id === "fotocode") || portfolioData.projects[3];
 
   // Navigation active tab
   const [activeTab, setActiveTab] = useState<string>("about");
@@ -325,19 +323,107 @@ export default function PortfolioPage() {
     });
   };
 
+  const featuredIds = ["blackonyx", "floodline"];
+  const featuredProjects = portfolioData.projects.filter((p) => featuredIds.includes(p.id));
+  const otherProjects = portfolioData.projects.filter(
+    (p) => !["etherwave", "audiolens", ...featuredIds].includes(p.id)
+  );
+
+  const renderProjectCard = (proj: (typeof portfolioData.projects)[number]) => (
+        <div
+          key={proj.id}
+          className="lg:col-span-6 glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between gap-6 relative overflow-hidden transition-all duration-300 hover:border-white/15"
+        >
+          <div className="flex flex-col gap-4 relative z-10">
+            <div className="flex items-center justify-between">
+              <span className="px-3 py-1 rounded-full text-[9px] font-mono uppercase tracking-widest bg-brand-gold/10 text-brand-gold border border-brand-gold/15 font-semibold">
+                {proj.badge}
+              </span>
+              <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest">
+                {proj.status}
+              </span>
+            </div>
+
+            <div className="flex flex-col gap-1">
+              <h3 className="font-serif text-2xl text-white font-bold tracking-tight">{proj.title}</h3>
+              <span className="font-mono text-xs text-zinc-400">{proj.subtitle}</span>
+            </div>
+
+            <p className="text-zinc-400 text-sm leading-relaxed">{proj.description}</p>
+
+              {"stats" in proj && Array.isArray(proj.stats) && proj.stats.length > 0 && (
+                <div className="flex flex-wrap gap-2">
+                  {proj.stats.map((stat: string) => (
+                    <span
+                      key={stat}
+                      className="px-3 py-1 rounded-full font-mono text-[10px] bg-brand-gold/10 text-brand-gold border border-brand-gold/20"
+                    >
+                      {stat}
+                    </span>
+                  ))}
+                </div>
+              )}
+
+            {proj.features && proj.features.length > 0 && (
+              <div className="flex flex-col gap-2 mt-2">
+                <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-wider">Features</span>
+                <ul className="text-xs text-zinc-400 flex flex-col gap-1.5 pl-3 list-disc">
+                  {proj.features.map((feat, i) => (
+                    <li key={i}>{feat}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-white/5 relative z-10">
+            <div className="flex flex-wrap gap-1.5">
+              {proj.techStack.map((tech) => (
+                <span
+                  key={tech}
+                  className="px-2.5 py-0.5 rounded-full font-mono text-[9px] bg-white/5 border border-white/5 text-zinc-400"
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
+
+            {proj.githubUrl && (
+              <a
+                href={proj.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2.5 border border-white/10 rounded-full font-mono text-[9px] uppercase tracking-widest text-zinc-300 hover:text-white hover:bg-white/5 transition-all text-center flex items-center justify-center gap-1.5"
+              >
+                <GithubIcon size={11} /> View Code
+              </a>
+            )}
+          </div>
+        </div>
+  );
+
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!contactForm.name || !contactForm.email || !contactForm.message) return;
+
+    // No backend: open the visitor's email app with the message pre-filled.
+    const subject = contactForm.subject || `Portfolio enquiry from ${contactForm.name}`;
+    const body = `${contactForm.message}
+
+${contactForm.name}
+${contactForm.email}`;
+    window.location.href = `mailto:${portfolioData.personalInfo.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
     setIsSubmitting(true);
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
       setContactForm({ name: "", email: "", subject: "", message: "" });
-    }, 1500);
+    }, 800);
   };
 
   return (
+    <MotionConfig reducedMotion="user">
     <div
       ref={mainContainerRef}
       className="min-h-screen bg-[#0a0a0c] text-zinc-100 font-sans relative overflow-x-hidden"
@@ -383,7 +469,7 @@ export default function PortfolioPage() {
               activeTab === "about" ? "text-brand-gold font-bold" : "text-zinc-400 hover:text-white"
             }`}
           >
-            <span>01/</span> About
+            <span className="hidden sm:inline">01/</span> About
           </a>
           <a
             href="#achievements"
@@ -392,7 +478,7 @@ export default function PortfolioPage() {
               activeTab === "achievements" ? "text-brand-gold font-bold" : "text-zinc-400 hover:text-white"
             }`}
           >
-            <span>02/</span> Wins
+            <span className="hidden sm:inline">02/</span> Wins
           </a>
           <a
             href="#works"
@@ -401,7 +487,7 @@ export default function PortfolioPage() {
               activeTab === "works" ? "text-brand-gold font-bold" : "text-zinc-400 hover:text-white"
             }`}
           >
-            <span>03/</span> Works
+            <span className="hidden sm:inline">03/</span> Works
           </a>
           <a
             href="#journey"
@@ -410,7 +496,7 @@ export default function PortfolioPage() {
               activeTab === "journey" ? "text-brand-gold font-bold" : "text-zinc-400 hover:text-white"
             }`}
           >
-            <span>04/</span> Journey
+            <span className="hidden sm:inline">04/</span> Journey
           </a>
           <a
             href="#skills"
@@ -419,7 +505,7 @@ export default function PortfolioPage() {
               activeTab === "skills" ? "text-brand-gold font-bold" : "text-zinc-400 hover:text-white"
             }`}
           >
-            <span>05/</span> Skills
+            <span className="hidden sm:inline">05/</span> Skills
           </a>
           <a
             href="#contact"
@@ -428,7 +514,7 @@ export default function PortfolioPage() {
               activeTab === "contact" ? "text-brand-gold font-bold" : "text-zinc-400 hover:text-white"
             }`}
           >
-            <span>06/</span> Contact
+            <span className="hidden sm:inline">06/</span> Contact
           </a>
         </motion.nav>
       </div>
@@ -445,7 +531,7 @@ export default function PortfolioPage() {
           <div className="flex items-center gap-6 font-mono text-[10px] uppercase tracking-widest text-zinc-500">
             <span>Chennai, India</span>
             <span>/</span>
-            <span>Available for contract</span>
+            <span>Open to internships &amp; freelance</span>
           </div>
         </header>
 
@@ -615,6 +701,9 @@ export default function PortfolioPage() {
             <p className="text-zinc-400 text-sm max-w-xl leading-relaxed">
               Proven track record of engineering award-winning platforms under fast-paced competition timelines.
             </p>
+            <p className="font-mono text-[10px] uppercase tracking-widest text-brand-gold/80">
+              3× 1st place · 5 podium finishes · 1 national-level win
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -635,7 +724,7 @@ export default function PortfolioPage() {
                   <span className="font-mono text-xs text-brand-gold/90 font-medium">Project: Black Onyx</span>
                 </div>
                 <p className="text-zinc-400 text-xs leading-relaxed">
-                  Won the First Prize at the national-level Future Forge Buildathon (VELS Institute of Science, Technology &amp; Advanced Studies) for "The Agent That Survives a Poisoned Tool": a provenance firewall for AI agents, paired with a locally trained small language model that scores whether each tool call fits the user's request.
+                  Won the First Prize at the national-level Future Forge Buildathon (VELS Institute of Science, Technology &amp; Advanced Studies) for "The Agent That Survives a Poisoned Tool": a provenance firewall for AI agents, paired with a local small language model that scores whether each tool call fits the user's request.
                 </p>
               </div>
               <div className="pt-4 border-t border-white/5 flex items-center justify-between font-mono text-[9px] text-zinc-400 relative z-10">
@@ -774,6 +863,8 @@ export default function PortfolioPage() {
           {/* Bento Grid Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             
+            {featuredProjects.map(renderProjectCard)}
+
             {/* Bento Block 1: Project EtherWave (Spans 6 columns) */}
             <div className="lg:col-span-6 glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between gap-8 relative overflow-hidden transition-all duration-300 hover:border-white/15">
               <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-brand-orange/5 blur-[80px] rounded-full pointer-events-none"></div>
@@ -1032,188 +1123,7 @@ export default function PortfolioPage() {
               </div>
             </div>
 
-            {/* Bento Block 3: Starbell Kids Playschool (Spans 6 columns) */}
-            <div className="lg:col-span-6 glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between gap-8 relative overflow-hidden transition-all duration-300 hover:border-white/15">
-              <div className="absolute top-0 right-0 w-[200px] h-[200px] bg-sky-500/5 blur-[60px] rounded-full pointer-events-none"></div>
-
-              <div className="flex flex-col gap-4 relative z-10">
-                <div className="flex items-center justify-between flex-wrap gap-2">
-                  <span className="px-3 py-1 rounded-full text-[9px] font-mono uppercase tracking-widest bg-sky-500/10 text-sky-400 border border-sky-500/15 font-semibold">
-                    {starbellProject.badge}
-                  </span>
-                  <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest">
-                    {starbellProject.status}
-                  </span>
-                </div>
-
-                <div className="flex flex-col gap-1">
-                  <h3 className="font-serif text-2xl text-white font-bold tracking-tight">
-                    {starbellProject.title}
-                  </h3>
-                  <span className="font-mono text-xs text-zinc-400">{starbellProject.subtitle}</span>
-                </div>
-
-                <p className="text-zinc-400 text-sm leading-relaxed">
-                  {starbellProject.description}
-                </p>
-
-                {starbellProject.features && starbellProject.features.length > 0 && (
-                  <div className="flex flex-col gap-2 mt-2">
-                    <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-wider">Features</span>
-                    <ul className="text-xs text-zinc-400 flex flex-col gap-1.5 pl-3 list-disc">
-                      {starbellProject.features.map((feat, i) => (
-                        <li key={i}>{feat}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-white/5 relative z-10">
-                <div className="flex flex-wrap gap-1.5">
-                  {starbellProject.techStack.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-2.5 py-0.5 rounded-full font-mono text-[9px] bg-white/5 border border-white/5 text-zinc-400"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-
-                <a
-                  href={starbellProject.githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-4 py-2.5 border border-white/10 rounded-full font-mono text-[9px] uppercase tracking-widest text-zinc-300 hover:text-white hover:bg-white/5 transition-all text-center flex items-center justify-center gap-1.5"
-                >
-                  <GithubIcon size={11} /> Inspect Repo
-                </a>
-              </div>
-            </div>
-
-            {/* Bento Block 4: Fotocode (Spans 6 columns) */}
-            <div className="lg:col-span-6 glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between gap-6 relative overflow-hidden transition-all duration-300 hover:border-white/15">
-              <div className="absolute top-0 right-0 w-[200px] h-[200px] bg-emerald-500/5 blur-[60px] rounded-full pointer-events-none"></div>
-
-              <div className="flex flex-col gap-4 relative z-10">
-                <div className="flex items-center justify-between">
-                  <span className="px-3 py-1 rounded-full text-[9px] font-mono uppercase tracking-widest bg-emerald-500/10 text-emerald-400 border border-emerald-500/15 font-semibold">
-                    {fotocodeProject.badge}
-                  </span>
-                  <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest">
-                    {fotocodeProject.status}
-                  </span>
-                </div>
-
-                <div className="flex flex-col gap-1">
-                  <h3 className="font-serif text-2xl text-white font-bold tracking-tight">
-                    {fotocodeProject.title}
-                  </h3>
-                  <span className="font-mono text-xs text-zinc-400">{fotocodeProject.subtitle}</span>
-                </div>
-
-                <p className="text-zinc-400 text-sm leading-relaxed">
-                  {fotocodeProject.description}
-                </p>
-
-                {fotocodeProject.features && fotocodeProject.features.length > 0 && (
-                  <div className="flex flex-col gap-2 mt-2">
-                    <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-wider">Features</span>
-                    <ul className="text-xs text-zinc-400 flex flex-col gap-1.5 pl-3 list-disc">
-                      {fotocodeProject.features.map((feat, i) => (
-                        <li key={i}>{feat}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-white/5 relative z-10">
-                <div className="flex flex-wrap gap-1.5">
-                  {fotocodeProject.techStack.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-2.5 py-0.5 rounded-full font-mono text-[9px] bg-white/5 border border-white/5 text-zinc-400"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-
-                <a
-                  href={fotocodeProject.githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-4 py-2.5 border border-white/10 rounded-full font-mono text-[9px] uppercase tracking-widest text-zinc-300 hover:text-white hover:bg-white/5 transition-all text-center flex items-center justify-center gap-1.5"
-                >
-                  <GithubIcon size={11} /> View Code
-                </a>
-              </div>
-            </div>
-
-            {/* More projects: every config entry that does not have a hand-built block above */}
-            {portfolioData.projects
-              .filter((p) => !["etherwave", "audiolens", "starbell", "fotocode"].includes(p.id))
-              .map((proj) => (
-                <div
-                  key={proj.id}
-                  className="lg:col-span-6 glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between gap-6 relative overflow-hidden transition-all duration-300 hover:border-white/15"
-                >
-                  <div className="flex flex-col gap-4 relative z-10">
-                    <div className="flex items-center justify-between">
-                      <span className="px-3 py-1 rounded-full text-[9px] font-mono uppercase tracking-widest bg-brand-gold/10 text-brand-gold border border-brand-gold/15 font-semibold">
-                        {proj.badge}
-                      </span>
-                      <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest">
-                        {proj.status}
-                      </span>
-                    </div>
-
-                    <div className="flex flex-col gap-1">
-                      <h3 className="font-serif text-2xl text-white font-bold tracking-tight">{proj.title}</h3>
-                      <span className="font-mono text-xs text-zinc-400">{proj.subtitle}</span>
-                    </div>
-
-                    <p className="text-zinc-400 text-sm leading-relaxed">{proj.description}</p>
-
-                    {proj.features && proj.features.length > 0 && (
-                      <div className="flex flex-col gap-2 mt-2">
-                        <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-wider">Features</span>
-                        <ul className="text-xs text-zinc-400 flex flex-col gap-1.5 pl-3 list-disc">
-                          {proj.features.map((feat, i) => (
-                            <li key={i}>{feat}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-white/5 relative z-10">
-                    <div className="flex flex-wrap gap-1.5">
-                      {proj.techStack.map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-2.5 py-0.5 rounded-full font-mono text-[9px] bg-white/5 border border-white/5 text-zinc-400"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-
-                    {proj.githubUrl && (
-                      <a
-                        href={proj.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-4 py-2.5 border border-white/10 rounded-full font-mono text-[9px] uppercase tracking-widest text-zinc-300 hover:text-white hover:bg-white/5 transition-all text-center flex items-center justify-center gap-1.5"
-                      >
-                        <GithubIcon size={11} /> View Code
-                      </a>
-                    )}
-                  </div>
-                </div>
-              ))}
+            {otherProjects.map(renderProjectCard)}
 
             {/* Bento Block 5: Coming up block (Spans 12 columns) */}
             <div className="lg:col-span-12 glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between gap-6 relative overflow-hidden transition-all duration-300 hover:border-white/15">
@@ -1535,9 +1445,9 @@ export default function PortfolioPage() {
               >
                 <CheckCircle size={36} className="text-brand-gold" />
                 <div className="flex flex-col gap-1">
-                  <h4 className="font-serif text-lg text-white font-bold">Transmission Complete</h4>
+                  <h4 className="font-serif text-lg text-white font-bold">Almost there</h4>
                   <p className="text-xs text-zinc-500 max-w-sm">
-                    Thank you. Your message has been successfully broadcast. I'll read the logs and respond.
+                    Your email app should have opened with the message ready. Press send there to deliver it. If nothing opened, write to me directly at the address shown on this page.
                   </p>
                 </div>
                 <button
@@ -1649,5 +1559,6 @@ export default function PortfolioPage() {
         </div>
       </footer>
     </div>
+    </MotionConfig>
   );
 }

@@ -184,7 +184,7 @@
       "id": "blackonyx",
       "title": "Black Onyx",
       "subtitle": "Provenance Firewall for AI Agents",
-      "description": "A firewall for tool-using AI agents. Untrusted tool output (email, web page, file) can be read as data but can never choose a destination or action: every value carries its sources and trust level, and a readable policy checks each tool argument at the moment of use. Paired with Laya, a locally trained small language model that gives an advisory score on whether a tool call fits the user's request.",
+      "description": "A firewall for tool-using AI agents. Untrusted tool output (email, web page, file) can be read as data but can never choose a destination or action: every value carries its sources and trust level, and a readable policy checks each tool argument at the moment of use. Paired with Laya, a local small language model that gives an advisory score on whether a tool call fits the user's request.",
       "status": "Completed",
       "badge": "NATIONAL HACKATHON WINNER",
       "techStack": [
@@ -196,10 +196,15 @@
       "features": [
         "1st Prize at the Future Forge Buildathon 2026 (national level)",
         "Deterministic rules blocked all 310 attack runs in the team's benchmark",
-        "Laya: 421M-parameter local model running as an advisory sentinel",
+        "Laya: a 421M-parameter local model used as an advisory sentinel",
         "144 automated tests"
       ],
-      "githubUrl": "https://github.com/devesh1905/black-onyx"
+      "githubUrl": "https://github.com/devesh1905/black-onyx",
+      "stats": [
+        "0 of 310 attacks got through",
+        "144 tests",
+        "1st Prize, National"
+      ]
     },
     {
       "id": "floodline",
@@ -222,7 +227,12 @@
         "Offline phone app with on-device Llama 3.2 1B, Tamil support and alerts",
         "Automated backend and phone tests"
       ],
-      "githubUrl": ""
+      "githubUrl": "",
+      "stats": [
+        "44 Chennai wards",
+        "Works offline",
+        "2nd Runner-up"
+      ]
     },
     {
       "id": "client-erp",
@@ -243,7 +253,12 @@
         "Requirements traceability against the client's specification",
         "19 client-specified reports"
       ],
-      "githubUrl": ""
+      "githubUrl": "",
+      "stats": [
+        "3 languages",
+        "Web + Android + iOS",
+        "19 reports"
+      ]
     },
     {
       "id": "client-payments",
@@ -261,7 +276,11 @@
         "Card, bank-transfer and installment payment flows",
         "Invoice and contract PDF export"
       ],
-      "githubUrl": ""
+      "githubUrl": "",
+      "stats": [
+        "Arabic RTL",
+        "3 payment methods"
+      ]
     },
     {
       "id": "client-pricing",
@@ -280,7 +299,11 @@
         "Multi-currency catalog",
         "Separate admin portal"
       ],
-      "githubUrl": ""
+      "githubUrl": "",
+      "stats": [
+        "Multi-currency",
+        "Admin portal"
+      ]
     }
   ],
   "achievements": [
