@@ -204,7 +204,9 @@
         "0 of 310 attacks got through",
         "144 tests",
         "1st Prize, National"
-      ]
+      ],
+      "image": "/projects/blackonyx.webp",
+      "imageAlt": "Black Onyx demo: a hijacked email agent has its unsafe file read blocked, with the event timeline and provenance graph"
     },
     {
       "id": "floodline",
@@ -232,7 +234,37 @@
         "44 Chennai wards",
         "Works offline",
         "2nd Runner-up"
-      ]
+      ],
+      "image": "/projects/floodline.webp",
+      "imageAlt": "FloodLine dashboard: ward-level flood risk map of Chennai with risk counts and a rainfall scenario panel (synthetic demo data)"
+    },
+    {
+      "id": "codeguard",
+      "title": "CodeGuard",
+      "subtitle": "AI Security Scanner with Reviewable Fixes",
+      "description": "Paste code, upload a file or point it at a GitHub repo and CodeGuard finds vulnerabilities, explains the risk and proposes a refactor you can copy or apply as a diff. Findings come back as structured, line-numbered results graded from low to critical.",
+      "status": "Completed",
+      "badge": "BUILDFEST '26 - 2ND PRIZE",
+      "techStack": [
+        "Next.js",
+        "TypeScript",
+        "Gemini API",
+        "Tailwind CSS"
+      ],
+      "features": [
+        "Detects SQL injection, XSS, hardcoded secrets, insecure deserialization, missing input validation and command injection",
+        "Per-finding risk explanation and suggested refactor",
+        "Fix-all and per-finding fixes shown as a diff",
+        "Single-file and whole-repository scans"
+      ],
+      "stats": [
+        "6 vulnerability classes",
+        "Line-level findings",
+        "2nd Prize"
+      ],
+      "githubUrl": "https://github.com/devesh1905/CodeGaurd",
+      "image": "/projects/codeguard.webp",
+      "imageAlt": "CodeGuard results: integrity score, hardcoded-secret finding with risk explanation and suggested refactor"
     },
     {
       "id": "client-erp",

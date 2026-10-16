@@ -334,6 +334,16 @@ export default function PortfolioPage() {
           key={proj.id}
           className="lg:col-span-6 glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between gap-6 relative overflow-hidden transition-all duration-300 hover:border-white/15"
         >
+          {(proj as { image?: string }).image && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={(proj as { image?: string }).image}
+              alt={(proj as { imageAlt?: string }).imageAlt ?? proj.title}
+              loading="lazy"
+              className="w-full aspect-[16/10] object-cover object-top rounded-2xl border border-white/10 relative z-10"
+            />
+          )}
+
           <div className="flex flex-col gap-4 relative z-10">
             <div className="flex items-center justify-between">
               <span className="px-3 py-1 rounded-full text-[9px] font-mono uppercase tracking-widest bg-brand-gold/10 text-brand-gold border border-brand-gold/15 font-semibold">
@@ -460,12 +470,12 @@ ${contactForm.email}`;
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.4, type: "spring", stiffness: 120 }}
-          className="glass-nav rounded-full px-5 py-3.5 flex items-center gap-3 sm:gap-6 border border-white/10 max-w-2xl w-full justify-between overflow-x-auto scrollbar-none"
+          className="glass-nav rounded-full px-3 sm:px-5 py-3.5 flex items-center gap-1 sm:gap-6 border border-white/10 max-w-2xl w-full justify-between overflow-x-auto scrollbar-none"
         >
           <a
             href="#about"
             onClick={() => setActiveTab("about")}
-            className={`font-mono text-[10px] uppercase tracking-widest transition-colors flex items-center gap-1.5 whitespace-nowrap ${
+            className={`font-mono text-[9px] sm:text-[10px] uppercase tracking-normal sm:tracking-widest transition-colors flex items-center gap-1 sm:gap-1.5 whitespace-nowrap ${
               activeTab === "about" ? "text-brand-gold font-bold" : "text-zinc-400 hover:text-white"
             }`}
           >
@@ -474,7 +484,7 @@ ${contactForm.email}`;
           <a
             href="#achievements"
             onClick={() => setActiveTab("achievements")}
-            className={`font-mono text-[10px] uppercase tracking-widest transition-colors flex items-center gap-1.5 whitespace-nowrap ${
+            className={`font-mono text-[9px] sm:text-[10px] uppercase tracking-normal sm:tracking-widest transition-colors flex items-center gap-1 sm:gap-1.5 whitespace-nowrap ${
               activeTab === "achievements" ? "text-brand-gold font-bold" : "text-zinc-400 hover:text-white"
             }`}
           >
@@ -483,7 +493,7 @@ ${contactForm.email}`;
           <a
             href="#works"
             onClick={() => setActiveTab("works")}
-            className={`font-mono text-[10px] uppercase tracking-widest transition-colors flex items-center gap-1.5 whitespace-nowrap ${
+            className={`font-mono text-[9px] sm:text-[10px] uppercase tracking-normal sm:tracking-widest transition-colors flex items-center gap-1 sm:gap-1.5 whitespace-nowrap ${
               activeTab === "works" ? "text-brand-gold font-bold" : "text-zinc-400 hover:text-white"
             }`}
           >
@@ -492,7 +502,7 @@ ${contactForm.email}`;
           <a
             href="#journey"
             onClick={() => setActiveTab("journey")}
-            className={`font-mono text-[10px] uppercase tracking-widest transition-colors flex items-center gap-1.5 whitespace-nowrap ${
+            className={`font-mono text-[9px] sm:text-[10px] uppercase tracking-normal sm:tracking-widest transition-colors flex items-center gap-1 sm:gap-1.5 whitespace-nowrap ${
               activeTab === "journey" ? "text-brand-gold font-bold" : "text-zinc-400 hover:text-white"
             }`}
           >
@@ -501,7 +511,7 @@ ${contactForm.email}`;
           <a
             href="#skills"
             onClick={() => setActiveTab("skills")}
-            className={`font-mono text-[10px] uppercase tracking-widest transition-colors flex items-center gap-1.5 whitespace-nowrap ${
+            className={`font-mono text-[9px] sm:text-[10px] uppercase tracking-normal sm:tracking-widest transition-colors flex items-center gap-1 sm:gap-1.5 whitespace-nowrap ${
               activeTab === "skills" ? "text-brand-gold font-bold" : "text-zinc-400 hover:text-white"
             }`}
           >
@@ -510,7 +520,7 @@ ${contactForm.email}`;
           <a
             href="#contact"
             onClick={() => setActiveTab("contact")}
-            className={`font-mono text-[10px] uppercase tracking-widest transition-colors flex items-center gap-1.5 whitespace-nowrap ${
+            className={`font-mono text-[9px] sm:text-[10px] uppercase tracking-normal sm:tracking-widest transition-colors flex items-center gap-1 sm:gap-1.5 whitespace-nowrap ${
               activeTab === "contact" ? "text-brand-gold font-bold" : "text-zinc-400 hover:text-white"
             }`}
           >
@@ -528,9 +538,9 @@ ${contactForm.email}`;
             <span className="font-serif italic text-lg tracking-tight font-bold">DS.</span>
             <span className="w-1.5 h-1.5 rounded-full bg-brand-terracotta"></span>
           </div>
-          <div className="flex items-center gap-6 font-mono text-[10px] uppercase tracking-widest text-zinc-500">
+          <div className="flex items-center gap-2 sm:gap-6 font-mono text-[9px] sm:text-[10px] uppercase tracking-widest text-zinc-500 text-right">
             <span>Chennai, India</span>
-            <span>/</span>
+            <span className="hidden sm:inline">/</span>
             <span>Open to internships &amp; freelance</span>
           </div>
         </header>
@@ -669,7 +679,7 @@ ${contactForm.email}`;
                       y: { repeat: Infinity, duration: 6, ease: "easeInOut", delay: w.delay },
                     }}
                     style={{ marginLeft: w.dx, marginRight: -w.dx }}
-                    className={`glass-card rounded-2xl px-4 py-3 flex flex-col gap-1 border ${
+                    className={`glass-card !bg-[#0e0e12]/95 rounded-2xl px-4 py-3 flex flex-col gap-1 border ${
                       w.gold ? "border-brand-gold/30" : "border-violet-400/25"
                     }`}
                   >
