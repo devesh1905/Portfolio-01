@@ -1,15 +1,24 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
+import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 
-const playfair = Playfair_Display({
+const serif = Instrument_Serif({
   variable: "--font-serif",
+  weight: "400",
+  style: ["normal", "italic"],
   subsets: ["latin"],
   display: "swap",
 });
 
-const jakarta = Plus_Jakarta_Sans({
+const sans = Geist({
   variable: "--font-sans",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+// Only for real data: stats, dates, live read-outs.
+const mono = Geist_Mono({
+  variable: "--font-mono",
   subsets: ["latin"],
   display: "swap",
 });
@@ -41,9 +50,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${jakarta.variable} h-full scroll-smooth antialiased`}
+      className={`${serif.variable} ${sans.variable} ${mono.variable} h-full scroll-smooth antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#0a0a0c] text-zinc-100">
+      <body className="min-h-full bg-bg text-ink">
         {children}
       </body>
     </html>

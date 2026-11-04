@@ -3,103 +3,13 @@
     "name": "Deveshwar S",
     "title": "Full-Stack & AI Developer | B.Tech IT Student",
     "bio": "I am a second-year Information Technology student who builds full-stack web and mobile products, AI agent systems and client platforms. I enjoy turning real problem statements into tested, working software, from bilingual business apps to AI agent security and offline-first emergency tools.",
-    "tagline": "Building full-stack platforms, AI agent systems and client products, and a multi-time hackathon winner.",
+    "tagline": "I build full-stack products and AI tools, and test them until they hold up.",
     "location": "Chennai, India",
     "email": "deveshwars1905@gmail.com",
     "github": "https://github.com/devesh1905",
-    "linkedin": "https://www.linkedin.com/in/deveshwar-s-19a67b362?utm_source=share_via&utm_content=profile&utm_medium=member_android",
+    "linkedin": "https://www.linkedin.com/in/deveshwar-s-19a67b362",
     "twitter": "",
     "resumeUrl": "/Deveshwar_S_Resume.pdf"
-  },
-  "skills": {
-    "languages": [
-      {
-        "name": "Python",
-        "category": "languages"
-      },
-      {
-        "name": "C",
-        "category": "languages"
-      },
-      {
-        "name": "Java",
-        "category": "languages"
-      },
-      {
-        "name": "TypeScript",
-        "category": "languages"
-      }
-    ],
-    "frameworks": [
-      {
-        "name": "HTML5",
-        "category": "frameworks"
-      },
-      {
-        "name": "CSS3",
-        "category": "frameworks"
-      },
-      {
-        "name": "JavaScript",
-        "category": "frameworks"
-      },
-      {
-        "name": "Tailwind CSS",
-        "category": "frameworks"
-      },
-      {
-        "name": "React",
-        "category": "frameworks"
-      },
-      {
-        "name": "Next.js",
-        "category": "frameworks"
-      },
-      {
-        "name": "Node.js",
-        "category": "frameworks"
-      },
-      {
-        "name": "FastAPI",
-        "category": "frameworks"
-      },
-      {
-        "name": "React Native (Expo)",
-        "category": "frameworks"
-      }
-    ],
-    "tools": [
-      {
-        "name": "Git & GitHub",
-        "category": "tools"
-      },
-      {
-        "name": "WebSockets",
-        "category": "tools"
-      },
-      {
-        "name": "Docker",
-        "category": "tools"
-      },
-      {
-        "name": "Gemini API",
-        "category": "tools"
-      }
-    ],
-    "databases": [
-      {
-        "name": "PostgreSQL",
-        "category": "databases"
-      },
-      {
-        "name": "Supabase",
-        "category": "databases"
-      },
-      {
-        "name": "SQLite",
-        "category": "databases"
-      }
-    ]
   },
   "projects": [
     {
@@ -108,7 +18,7 @@
       "subtitle": "Lossless Audio Streaming Utility",
       "description": "An open-source desktop application designed to capture system audio via loopback pipelines and stream it to secondary devices over a local network. Built to solve high-latency issues in wireless audio setups.",
       "status": "Active",
-      "badge": "AUDIO UTILITY",
+      "badge": "Audio utility",
       "techStack": [
         "Python",
         "WebSockets",
@@ -120,7 +30,9 @@
         "Bypasses proprietary client apps using WebSockets and Web Audio API",
         "Hardware-inspired console with responsive visualizer and volume control"
       ],
-      "githubUrl": "https://github.com/devesh1905/project-etherwave"
+      "githubUrl": "https://github.com/devesh1905/project-etherwave",
+      "image": "/projects/etherwave.webp",
+      "imageAlt": "EtherWave desktop app streaming system audio to a phone"
     },
     {
       "id": "audiolens",
@@ -128,7 +40,7 @@
       "subtitle": "AI Clinical Workup for Audiologists",
       "description": "A full-featured clinical workup system tailored for audiologists. Provides AI diagnostic assistance across test sections alongside overall clinical report generation.",
       "status": "Completed",
-      "badge": "HACKATHON WINNER",
+      "badge": "Hackathon winner",
       "techStack": [
         "Next.js",
         "TypeScript",
@@ -141,7 +53,9 @@
         "Automated cross-test correlation and comprehensive PDF report generation",
         "Deterministic rule-based clinical scoring engine with AI-driven summary insights"
       ],
-      "githubUrl": "https://github.com/devesh1905"
+      "githubUrl": "",
+      "image": "/projects/audiolens.webp",
+      "imageAlt": "AudioLens audiogram workup screen"
     },
     {
       "id": "starbell",
@@ -149,7 +63,7 @@
       "subtitle": "Responsive Educational Website",
       "description": "A fully custom, responsive website designed and developed for Starbell Playschool. Optimized for fast load times and clean navigation to help parents easily access enrollment information, gallery events, and curriculum details.",
       "status": "Completed",
-      "badge": "CLIENT WORK",
+      "badge": "Client work",
       "techStack": [
         "HTML/CSS",
         "JavaScript"
@@ -159,7 +73,9 @@
         "Fast asset loading times and responsive typography layouts",
         "Secure registration form fields and curriculum download access points"
       ],
-      "githubUrl": "https://github.com/devesh1905/starbell"
+      "githubUrl": "https://github.com/devesh1905/Starbell",
+      "image": "/projects/starbell.webp",
+      "imageAlt": "Starbell Playschool website home page"
     },
     {
       "id": "fotocode",
@@ -167,7 +83,7 @@
       "subtitle": "Award-Winning Web Demo",
       "description": "A high-fidelity landing page and interactive interface built under competition limits. Designed to feature fast navigation layouts, responsive grids, and optimal visual performance across multi-device formats.",
       "status": "Completed",
-      "badge": "COMPETITION WINNER",
+      "badge": "Competition winner",
       "techStack": [
         "HTML5",
         "CSS3",
@@ -178,7 +94,9 @@
         "Optimal page load and layout responsiveness under constraint layouts",
         "Accessible DOM structure with structured visual assets"
       ],
-      "githubUrl": "https://github.com/devesh1905/fotocode"
+      "githubUrl": "https://github.com/devesh1905/fotocode.",
+      "image": "/projects/fotocode.webp",
+      "imageAlt": "Fotocode landing page"
     },
     {
       "id": "blackonyx",
@@ -186,7 +104,7 @@
       "subtitle": "Provenance Firewall for AI Agents",
       "description": "A firewall for tool-using AI agents. Untrusted tool output (email, web page, file) can be read as data but can never choose a destination or action: every value carries its sources and trust level, and a readable policy checks each tool argument at the moment of use. Paired with Laya, a local small language model that gives an advisory score on whether a tool call fits the user's request.",
       "status": "Completed",
-      "badge": "NATIONAL HACKATHON WINNER",
+      "badge": "National hackathon winner",
       "techStack": [
         "Python",
         "Policy Engine",
@@ -214,7 +132,7 @@
       "subtitle": "Ward-Level Flood Risk & Alerts for Chennai",
       "description": "A flood-warning system that keeps working when the network does not. Ward-level risk is computed on real city polygons with terrain-derived lowness, an LLM planner assists operators while deterministic rules decide evacuation, and a phone app answers questions offline using an on-device model.",
       "status": "Completed",
-      "badge": "2ND RUNNER-UP",
+      "badge": "2nd runner-up",
       "techStack": [
         "FastAPI",
         "React",
@@ -244,7 +162,7 @@
       "subtitle": "AI Security Scanner with Reviewable Fixes",
       "description": "Paste code, upload a file or point it at a GitHub repo and CodeGuard finds vulnerabilities, explains the risk and proposes a refactor you can copy or apply as a diff. Findings come back as structured, line-numbered results graded from low to critical.",
       "status": "Completed",
-      "badge": "BUILDFEST '26 - 2ND PRIZE",
+      "badge": "BUILDFEST '26, 2nd prize",
       "techStack": [
         "Next.js",
         "TypeScript",
@@ -272,7 +190,7 @@
       "subtitle": "Bilingual Web and Mobile Platform",
       "description": "An ERP built for an international client to track projects from award to delivery, follow signed delivery certificates, handle accounting, and produce the reports the client specified. One codebase ships as a responsive website and as Android and iOS apps.",
       "status": "Delivered",
-      "badge": "CLIENT WORK",
+      "badge": "Client work",
       "techStack": [
         "React",
         "TypeScript",
@@ -290,7 +208,9 @@
         "3 languages",
         "Web + Android + iOS",
         "19 reports"
-      ]
+      ],
+      "image": "/projects/client-erp.webp",
+      "imageAlt": "Cover for the supply-chain and delivery ERP"
     },
     {
       "id": "client-payments",
@@ -298,7 +218,7 @@
       "subtitle": "Bilingual Mobile App",
       "description": "A mobile app and payment portal for a client: students browse courses, sign in with phone and OTP, accept a contract, and pay by card, bank transfer or a deferred installment plan.",
       "status": "Delivered",
-      "badge": "CLIENT WORK",
+      "badge": "Client work",
       "techStack": [
         "React Native (Expo)",
         "TypeScript"
@@ -312,7 +232,9 @@
       "stats": [
         "Arabic RTL",
         "3 payment methods"
-      ]
+      ],
+      "image": "/projects/client-payments.webp",
+      "imageAlt": "Cover for the course registration and payment app"
     },
     {
       "id": "client-pricing",
@@ -320,7 +242,7 @@
       "subtitle": "Web, Mobile and Admin Prototypes",
       "description": "A client project: a price-comparison platform with a bilingual (English/Arabic) website, a mobile app prototype and an admin portal, backed by a documented design system.",
       "status": "Prototype",
-      "badge": "CLIENT WORK",
+      "badge": "Client work",
       "techStack": [
         "HTML/CSS",
         "JavaScript",
@@ -335,15 +257,17 @@
       "stats": [
         "Multi-currency",
         "Admin portal"
-      ]
+      ],
+      "image": "/projects/client-pricing.webp",
+      "imageAlt": "Cover for the multi-currency price-comparison platform"
     }
   ],
   "achievements": [
     {
       "id": "futureforge",
-      "title": "Future Forge Buildathon 2026",
+      "title": "Future Forge Buildathon",
       "event": "Future Forge Buildathon (national level), VELS Institute",
-      "badge": "1st Prize",
+      "badge": "1st Prize, national level",
       "date": "October 2026",
       "project": "Black Onyx",
       "description": "First Prize for 'The Agent That Survives a Poisoned Tool'."
@@ -352,23 +276,23 @@
       "id": "dreamovation",
       "title": "Dreamovation 2.0",
       "event": "Hackathon and Business Pitching, REC Institution's Innovation Council",
-      "badge": "Second Runner-up",
+      "badge": "Second runner-up",
       "date": "October 2026",
       "project": "FloodLine",
       "description": "Second Runner-up as Team Nexora."
     },
     {
       "id": "smartability",
-      "title": "SmartAbility Hackathon Winner",
+      "title": "SmartAbility Hackathon",
       "event": "SmartAbility College Hackathon",
-      "badge": "1st Place Winner",
+      "badge": "1st Place",
       "date": "August 2026",
       "project": "AudioLens",
       "description": "Won 1st Place for AudioLens, an AI-powered clinical workup platform designed for audiologists with test-by-test AI support and automated comprehensive report generation."
     },
     {
       "id": "buildfest26",
-      "title": "BUILDFEST '26 2nd Prize",
+      "title": "BUILDFEST '26",
       "event": "BUILDFEST '26",
       "badge": "2nd Prize",
       "date": "August 2026",
@@ -377,7 +301,7 @@
     },
     {
       "id": "fotocode-win",
-      "title": "REC Capture & Code Winner",
+      "title": "REC Capture & Code",
       "event": "Capture & Code Web Competition",
       "badge": "1st Place",
       "date": "March 2026",
@@ -385,11 +309,45 @@
       "description": "Won 1st Place in the college web development competition for building Fotocode, a responsive high-performance web platform."
     }
   ],
-  "upcomingProjects": [
+  "skillGroups": [
     {
-      "id": "upcoming-1",
-      "title": "Exploring Gen AI, Agentic AI and workflows",
-      "description": "Designing autonomous agentic systems, integrating LLM architectures, and orchestrating multi-step AI workflows for automated problem solving and intelligent system execution."
+      "name": "Languages",
+      "items": [
+        "Python",
+        "TypeScript",
+        "JavaScript",
+        "Java",
+        "C",
+        "SQL"
+      ]
+    },
+    {
+      "name": "Build",
+      "items": [
+        "React",
+        "Next.js",
+        "Node.js",
+        "FastAPI",
+        "React Native (Expo)",
+        "Tailwind CSS"
+      ]
+    },
+    {
+      "name": "Data and tools",
+      "items": [
+        "PostgreSQL",
+        "Supabase",
+        "SQLite",
+        "Docker",
+        "Git and GitHub",
+        "WebSockets",
+        "Gemini API"
+      ]
     }
+  ],
+  "now": [
+    "Second-year B.Tech IT at Rajalakshmi Engineering College, Chennai",
+    "Building security tooling for tool-using AI agents",
+    "Open to internships and freelance work"
   ]
 }
