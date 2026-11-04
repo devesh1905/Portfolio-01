@@ -30,11 +30,11 @@ const siteUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: "Deveshwar S | Full-Stack & AI Developer",
-  description: "Portfolio of Deveshwar S, full-stack and AI developer. National-level hackathon winner (Future Forge Buildathon 2026) with projects including Black Onyx, FloodLine, AudioLens and Project EtherWave.",
-  keywords: ["Deveshwar S", "Full-Stack Developer", "AI Developer", "Hackathon Winner", "Black Onyx", "FloodLine", "Next.js", "FastAPI", "Chennai Developer"],
+  description: "Portfolio of Deveshwar S, a full-stack and AI developer in Chennai. Ten projects including Black Onyx, FloodLine, AudioLens and Project EtherWave.",
+  keywords: ["Deveshwar S", "Full-Stack Developer", "AI Developer", "Black Onyx", "FloodLine", "Next.js", "FastAPI", "Chennai Developer"],
   openGraph: {
     title: "Deveshwar S | Full-Stack & AI Developer",
-    description: "National-level hackathon winner building full-stack platforms, AI agent systems and client products.",
+    description: "I build full-stack products and AI tools, and test them until they hold up.",
     images: [{ url: "/og.png", width: 1200, height: 630 }],
     type: "website",
   },

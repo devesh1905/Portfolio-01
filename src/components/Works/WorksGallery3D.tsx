@@ -233,8 +233,14 @@ function Card({
     [material]
   );
 
+  // Cards stay invisible until their screenshot (or, failing that, the cover) is ready,
+  // then fade in one after another.
+  const loaded = useRef(false);
   useEffect(() => {
-    if (!project.image) return;
+    if (!project.image) {
+      loaded.current = true;
+      return;
+    }
     let cancelled = false;
     new THREE.TextureLoader().load(
       project.image,
@@ -244,9 +250,12 @@ function Card({
         tex.anisotropy = 4;
         material.uniforms.uTex.value.dispose();
         material.uniforms.uTex.value = tex;
+        loaded.current = true;
       },
       undefined,
-      () => {} // keep the cover if the screenshot is missing
+      () => {
+        loaded.current = true; // keep the cover if the screenshot is missing
+      }
     );
     return () => {
       cancelled = true;
@@ -264,10 +273,13 @@ function Card({
   );
 
   const hover = useRef({ x: 0, v: 0 });
+  const appear = useRef({ t: -index * 0.08 }); // seconds since ready, minus a stagger
   useFrame((_, dt) => {
     spring(hover.current, shared.hovered.current === index ? 1 : 0, 170, 14, Math.min(dt, 1 / 30));
     material.uniforms.uHover.value = hover.current.x;
-    material.uniforms.uAlpha.value = shared.hidden.current === project.id ? 0 : 1;
+    if (loaded.current) appear.current.t += Math.min(dt, 1 / 30);
+    const fade = THREE.MathUtils.smoothstep(appear.current.t, 0, 0.6);
+    material.uniforms.uAlpha.value = shared.hidden.current === project.id ? 0 : fade;
   });
 
   return (

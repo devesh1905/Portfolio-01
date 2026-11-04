@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { works, type Project } from "@/lib/portfolio";
 import WorksFallback from "./WorksFallback";
@@ -19,11 +19,37 @@ function canUse3D() {
   }
 }
 
+const fromHash = () => works.find((p) => `#${p.id}` === window.location.hash) ?? null;
+
+// History entries for the project page. `landed` marks a page opened straight from a link,
+// where going back would leave the site, so closing just clears the hash instead.
+type PanelState = { project: string; landed?: boolean };
+const panelState = () => window.history.state as PanelState | null;
+const clearHash = () => window.history.replaceState(null, "", window.location.pathname + window.location.search);
+
 export default function WorksSection() {
   // Server render and first paint use the flat list; large screens upgrade to 3D after mount.
   const [use3D, setUse3D] = useState(false);
   const [open, setOpen] = useState<{ project: Project; origin: DOMRect | null } | null>(null);
-  const onOpen = (project: Project, origin: DOMRect | null) => setOpen({ project, origin });
+  const closePanel = useRef<(() => void) | null>(null);
+
+  // Each project page has its own URL (#blackonyx), so it can be shared and Back closes it.
+  const onOpen = (project: Project, origin: DOMRect | null) => {
+    setOpen({ project, origin });
+    window.history.pushState({ project: project.id } satisfies PanelState, "", `#${project.id}`);
+  };
+  const onNavigate = (project: Project) => {
+    setOpen({ project, origin: null });
+    window.history.replaceState({ ...panelState(), project: project.id }, "", `#${project.id}`);
+  };
+  const onRequestClose = useCallback(() => {
+    const state = panelState();
+    if (state?.project && !state.landed) window.history.back(); // popstate runs the close
+    else {
+      clearHash();
+      closePanel.current?.();
+    }
+  }, []);
 
   useEffect(() => {
     const update = () => setUse3D(canUse3D());
@@ -34,6 +60,24 @@ export default function WorksSection() {
     );
     queries.forEach((mq) => mq.addEventListener("change", update));
     return () => queries.forEach((mq) => mq.removeEventListener("change", update));
+  }, []);
+
+  useEffect(() => {
+    // A shared link straight to a project opens its page once the app has mounted.
+    const openFromLink = () => {
+      const landed = fromHash();
+      if (!landed) return;
+      window.history.replaceState({ project: landed.id, landed: true } satisfies PanelState, "", `#${landed.id}`);
+      setOpen({ project: landed, origin: null });
+    };
+    openFromLink();
+    const onPop = () => {
+      const p = fromHash();
+      if (p) setOpen((o) => (o?.project.id === p.id ? o : { project: p, origin: null }));
+      else closePanel.current?.();
+    };
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
   }, []);
 
   return (
@@ -57,7 +101,15 @@ export default function WorksSection() {
         </div>
       )}
 
-      <ProjectPanel project={open?.project ?? null} origin={open?.origin ?? null} onClosed={() => setOpen(null)} />
+      <ProjectPanel
+        project={open?.project ?? null}
+        origin={open?.origin ?? null}
+        next={open ? works[(works.indexOf(open.project) + 1) % works.length] : null}
+        onNavigate={onNavigate}
+        onRequestClose={onRequestClose}
+        closeRef={closePanel}
+        onClosed={() => setOpen(null)}
+      />
     </section>
   );
 }

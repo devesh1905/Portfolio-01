@@ -13,6 +13,8 @@ export type Project = {
   stats?: string[];
   image?: string;
   imageAlt?: string;
+  // Extra screens shown on the project page, under the description.
+  gallery?: { src: string; caption: string }[];
 };
 
 export type Achievement = (typeof data.achievements)[number];

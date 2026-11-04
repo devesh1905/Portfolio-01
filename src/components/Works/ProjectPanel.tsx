@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useLayoutEffect, useRef } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef } from "react";
 import dynamic from "next/dynamic";
 import type { Project } from "@/lib/portfolio";
 import { GithubIcon } from "@/components/icons";
@@ -22,10 +22,20 @@ const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)"
 export default function ProjectPanel({
   project,
   origin,
+  next,
+  onNavigate,
+  onRequestClose,
+  closeRef,
   onClosed,
 }: {
   project: Project | null;
   origin: DOMRect | null;
+  next: Project | null;
+  onNavigate: (p: Project) => void;
+  // Close buttons and Esc ask the parent, which keeps the URL/history in step and then
+  // calls the animated close through `closeRef`.
+  onRequestClose: () => void;
+  closeRef: { current: (() => void) | null };
   onClosed: () => void;
 }) {
   const dialog = useRef<HTMLDialogElement>(null);
@@ -64,7 +74,22 @@ export default function ProjectPanel({
   // Open: runs before paint so the details never flash in their final place.
   useLayoutEffect(() => {
     const el = dialog.current;
-    if (!project || !el || el.open) return;
+    if (!project || !el) return;
+    // Moving to another project inside the open page: back to the top, details rise again.
+    if (el.open) {
+      el.scrollTop = 0;
+      if (reducedMotion()) return;
+      [hero.current, ...reveals()].forEach((node, i) =>
+        node?.animate(
+          [
+            { opacity: 0, transform: "translateY(28px)" },
+            { opacity: 1, transform: "none" },
+          ],
+          { duration: 600, delay: i * 60, easing: "cubic-bezier(0.2, 0.7, 0.2, 1)", fill: "backwards" }
+        )
+      );
+      return;
+    }
     closing.current = false;
     el.showModal();
     el.scrollTop = 0;
@@ -97,7 +122,7 @@ export default function ProjectPanel({
 
   const close = useCallback(() => {
     const el = dialog.current;
-    if (!el || closing.current) return;
+    if (!el?.open || closing.current) return;
     closing.current = true;
     const finish = () => {
       el.close();
@@ -139,6 +164,10 @@ export default function ProjectPanel({
     }
   }, [origin, project, fly, onClosed]);
 
+  useEffect(() => {
+    closeRef.current = close;
+  }, [close, closeRef]);
+
   const Demo = project ? DEMOS[project.id] : undefined;
 
   return (
@@ -146,7 +175,7 @@ export default function ProjectPanel({
       ref={dialog}
       onCancel={(e) => {
         e.preventDefault();
-        close();
+        onRequestClose();
       }}
       aria-labelledby="project-title"
       className="m-0 h-dvh max-h-none w-screen max-w-none overflow-y-auto bg-transparent p-0 text-ink backdrop:bg-transparent"
@@ -157,7 +186,7 @@ export default function ProjectPanel({
           <div data-reveal className="flex items-center justify-between gap-4">
             <button
               type="button"
-              onClick={close}
+              onClick={onRequestClose}
               className="inline-flex min-h-11 items-center gap-2 rounded-full border border-line px-4 text-sm text-ink hover:border-gold"
             >
               <span aria-hidden="true">←</span> All work
@@ -198,6 +227,23 @@ export default function ProjectPanel({
                 </div>
               )}
 
+              {project.gallery && project.gallery.length > 0 && (
+                <div data-reveal className="flex flex-col gap-6">
+                  {project.gallery.map((g) => (
+                    <figure key={g.src}>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={g.src}
+                        alt={g.caption}
+                        loading="lazy"
+                        className="aspect-[1.6] w-full rounded-xl border border-line object-cover object-top"
+                      />
+                      <figcaption className="mt-2 text-sm text-subtle">{g.caption}</figcaption>
+                    </figure>
+                  ))}
+                </div>
+              )}
+
               {project.features.length > 0 && (
                 <div data-reveal>
                   <h3 className="mb-3 text-sm font-medium text-subtle">What it does</h3>
@@ -235,6 +281,24 @@ export default function ProjectPanel({
               )}
             </aside>
           </div>
+
+          {next && next.id !== project.id && (
+            <button
+              type="button"
+              data-reveal
+              onClick={() => onNavigate(next)}
+              className="group mt-20 grid w-full items-center gap-6 border-t border-line pt-8 text-left sm:grid-cols-[1fr_18rem]"
+            >
+              <span>
+                <span className="block text-sm text-subtle">Next project</span>
+                <span className="mt-2 block font-serif text-5xl leading-none text-ink transition-colors group-hover:text-gold sm:text-6xl">
+                  {next.title} <span aria-hidden="true">→</span>
+                </span>
+                <span className="mt-3 block text-muted">{next.subtitle}</span>
+              </span>
+              <ProjectImage project={next} className="transition-colors group-hover:border-gold" />
+            </button>
+          )}
         </article>
       )}
     </dialog>

@@ -32,7 +32,13 @@
       ],
       "githubUrl": "https://github.com/devesh1905/project-etherwave",
       "image": "/projects/etherwave.webp",
-      "imageAlt": "EtherWave desktop app streaming system audio to a phone"
+      "imageAlt": "EtherWave desktop app streaming system audio to a phone",
+      "gallery": [
+        {
+          "src": "/projects/etherwave-2.webp",
+          "caption": "The phone page before and after connecting: live level meters, about 59 ms latency at 1.54 Mbps."
+        }
+      ]
     },
     {
       "id": "audiolens",
@@ -55,7 +61,17 @@
       ],
       "githubUrl": "",
       "image": "/projects/audiolens.webp",
-      "imageAlt": "AudioLens audiogram workup screen"
+      "imageAlt": "AudioLens audiogram workup screen",
+      "gallery": [
+        {
+          "src": "/projects/audiolens-2.webp",
+          "caption": "Tuning-fork tests checked against what the hearing test predicts, with mismatches flagged."
+        },
+        {
+          "src": "/projects/audiolens-3.webp",
+          "caption": "Middle-ear pressure test: entering readings draws the tympanogram and classifies each ear."
+        }
+      ]
     },
     {
       "id": "starbell",
@@ -75,7 +91,17 @@
       ],
       "githubUrl": "https://github.com/devesh1905/Starbell",
       "image": "/projects/starbell.webp",
-      "imageAlt": "Starbell Playschool website home page"
+      "imageAlt": "Starbell Playschool website home page",
+      "gallery": [
+        {
+          "src": "/projects/starbell-2.webp",
+          "caption": "Programmes for each age group, from play group to upper kindergarten."
+        },
+        {
+          "src": "/projects/starbell-3.webp",
+          "caption": "Why parents choose the school: play-based learning, CCTV access, daycare and small classes."
+        }
+      ]
     },
     {
       "id": "fotocode",
@@ -124,7 +150,17 @@
         "1st Prize, National"
       ],
       "image": "/projects/blackonyx.webp",
-      "imageAlt": "Black Onyx demo: a hijacked email agent has its unsafe file read blocked, with the event timeline and provenance graph"
+      "imageAlt": "Black Onyx demo: a hijacked email agent has its unsafe file read blocked, with the event timeline and provenance graph",
+      "gallery": [
+        {
+          "src": "/projects/blackonyx-2.webp",
+          "caption": "The \"agent is hijacked\" test with no defence: hidden instructions in an email make the agent read a contacts file."
+        },
+        {
+          "src": "/projects/blackonyx-3.webp",
+          "caption": "Ten attack types against each defence: every attack succeeds undefended, none of 310 get through Black Onyx, and all 8 normal tasks still finish."
+        }
+      ]
     },
     {
       "id": "floodline",
@@ -154,7 +190,17 @@
         "2nd Runner-up"
       ],
       "image": "/projects/floodline.webp",
-      "imageAlt": "FloodLine dashboard: ward-level flood risk map of Chennai with risk counts and a rainfall scenario panel (synthetic demo data)"
+      "imageAlt": "FloodLine dashboard: ward-level flood risk map of Chennai with risk counts and a rainfall scenario panel (synthetic demo data)",
+      "gallery": [
+        {
+          "src": "/projects/floodline-2.webp",
+          "caption": "The alert planner: the evidence behind an alert, the drafted message and an evacuation route, shown here on simulated rainfall."
+        },
+        {
+          "src": "/projects/floodline-3.webp",
+          "caption": "Wards to prioritise in the next six hours, each with its risk level, recommended action and flood history."
+        }
+      ]
     },
     {
       "id": "codeguard",
@@ -182,7 +228,17 @@
       ],
       "githubUrl": "https://github.com/devesh1905/CodeGaurd",
       "image": "/projects/codeguard.webp",
-      "imageAlt": "CodeGuard results: integrity score, hardcoded-secret finding with risk explanation and suggested refactor"
+      "imageAlt": "CodeGuard results: integrity score, hardcoded-secret finding with risk explanation and suggested refactor",
+      "gallery": [
+        {
+          "src": "/projects/codeguard-2.webp",
+          "caption": "Original and fixed code side by side, under a scan summary of 6 issues, 4 of them critical."
+        },
+        {
+          "src": "/projects/codeguard-3.webp",
+          "caption": "After the security fixes, suggested code-quality improvements with before-and-after snippets."
+        }
+      ]
     },
     {
       "id": "client-erp",
