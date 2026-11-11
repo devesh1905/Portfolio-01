@@ -130,7 +130,7 @@
       "subtitle": "Provenance Firewall for AI Agents",
       "description": "A firewall for tool-using AI agents. Untrusted tool output (email, web page, file) can be read as data but can never choose a destination or action: every value carries its sources and trust level, and a readable policy checks each tool argument at the moment of use. Paired with Laya, a local small language model that gives an advisory score on whether a tool call fits the user's request.",
       "status": "Completed",
-      "badge": "National hackathon winner",
+      "badge": "1st of 200 teams, national level",
       "techStack": [
         "Python",
         "Policy Engine",
@@ -138,7 +138,7 @@
         "Streamlit"
       ],
       "features": [
-        "1st Prize at the Future Forge Buildathon 2026 (national level)",
+        "1st place out of 200 teams at the Future Forge Buildathon 2026 (national level)",
         "Deterministic rules blocked all 310 attack runs in the team's benchmark",
         "Laya: a 421M-parameter local model used as an advisory sentinel",
         "144 automated tests"
@@ -147,7 +147,7 @@
       "stats": [
         "0 of 310 attacks got through",
         "144 tests",
-        "1st Prize, National"
+        "1st of 200 teams, national level"
       ],
       "image": "/projects/blackonyx.webp",
       "imageAlt": "Black Onyx demo: a hijacked email agent has its unsafe file read blocked, with the event timeline and provenance graph",
@@ -323,7 +323,7 @@
       "id": "futureforge",
       "title": "Future Forge Buildathon",
       "event": "Future Forge Buildathon (national level), VELS Institute",
-      "badge": "1st Prize, national level",
+      "badge": "1st of 200 teams, national level",
       "date": "October 2026",
       "project": "Black Onyx",
       "description": "First Prize for 'The Agent That Survives a Poisoned Tool'."
