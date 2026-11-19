@@ -6,6 +6,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import type { Project } from "@/lib/portfolio";
+import WaterFloor, { REFLECTION_LAYER, type WaterControls } from "./WaterFloor";
+import GlassOrb, { type OrbState } from "./GlassOrb";
 
 // Cards sit on the inside of a cylinder around the camera, like a curved wall of prints.
 // Page scroll is the single source of truth for position: dragging and the buttons scroll
@@ -76,12 +78,16 @@ const vertexShader = /* glsl */ `
   }
 `;
 
+// Each card is a slab of glass over its screenshot: a narrow dome at the edge (flat in the
+// middle, so the screenshot stays crisp) bends the image at the rims with a little
+// dispersion, and picks up a fresnel sheen, a tight highlight and a thin rim line.
 const fragmentShader = /* glsl */ `
   uniform sampler2D uTex;
   uniform float uHover;
   uniform float uAlpha;
   uniform float uMirror;
   uniform vec2 uSize;
+  uniform vec3 uLight;
   varying vec2 vUv;
   varying float vAngle;
   varying float vShade;
@@ -89,47 +95,42 @@ const fragmentShader = /* glsl */ `
     vec2 q = abs(p) - b + r;
     return length(max(q, 0.0)) + min(max(q.x, q.y), 0.0) - r;
   }
+  float sdf(vec2 p) { return roundedBox(p, uSize * 0.5, 0.09); }
   void main() {
     vec2 local = (vUv - 0.5) * uSize;
-    float d = roundedBox(local, uSize * 0.5, 0.09);
+    float d = sdf(local);
     float edge = fwidth(d);
     float alpha = 1.0 - smoothstep(-edge, edge, d);
     // Fade cards as they turn away at the sides.
     alpha *= (1.0 - smoothstep(0.75, 1.05, abs(vAngle))) * uAlpha;
-    // The reflection shows only the edge nearest the floor, fading out quickly.
-    alpha *= mix(1.0, (1.0 - smoothstep(0.0, 0.5, vUv.y)) * 0.3, uMirror);
-    // A slight zoom inside the frame on hover.
-    vec2 uv = (vUv - 0.5) * (1.0 - uHover * 0.04) + 0.5;
-    vec3 col = texture2D(uTex, uv).rgb * mix(0.86, 1.0, uHover) * vShade;
-    gl_FragColor = vec4(col, alpha);
-    #include <colorspace_fragment>
-  }
-`;
+    // In the water's reflection pass, fade towards the top of the card.
+    alpha *= mix(1.0, 1.0 - smoothstep(0.0, 0.9, vUv.y), uMirror);
 
-// Perspective grid on the floor, curved to follow the strip so it scrolls with it.
-const floorVertex = /* glsl */ `
-  varying vec3 vPos;
-  void main() {
-    vPos = (modelMatrix * vec4(position, 1.0)).xyz;
-    gl_Position = projectionMatrix * viewMatrix * vec4(vPos, 1.0);
-  }
-`;
-const floorFragment = /* glsl */ `
-  uniform float uOffset;
-  uniform vec3 uColor;
-  varying vec3 vPos;
-  float gridLine(float v, float spacing) {
-    float g = abs(fract(v / spacing - 0.5) - 0.5) / fwidth(v / spacing);
-    return 1.0 - min(g, 1.0);
-  }
-  void main() {
-    float r = length(vPos.xz);
-    float a = atan(vPos.x, -vPos.z);
-    float s = a * ${R.toFixed(1)} + uOffset; // same arc units as the cards
-    float line = max(gridLine(s, 0.62), gridLine(r, 0.62));
-    float fade = smoothstep(${(R + 3).toFixed(1)}, ${(R - 1).toFixed(1)}, r) * smoothstep(0.2, 2.5, r)
-      * (1.0 - smoothstep(0.7, 1.15, abs(a)));
-    gl_FragColor = vec4(uColor, line * fade * 0.22);
+    // Dome normal from the SDF gradient: steep at the rim, flat inside the bevel.
+    float bevel = 0.15 + uHover * 0.05;
+    vec2 e = vec2(0.002, 0.0);
+    vec2 g = vec2(sdf(local + e.xy) - sdf(local - e.xy), sdf(local + e.yx) - sdf(local - e.yx));
+    g /= length(g) + 1e-5;
+    float s = clamp(-d / bevel, 0.0, 1.0);
+    float h = sqrt(1.0 - (1.0 - s) * (1.0 - s));
+    vec3 n = normalize(vec3(g * (1.0 - h), h + 0.04));
+
+    // Refraction at the rim, each channel a little further out. A slight zoom on hover.
+    vec2 uv = (vUv - 0.5) * (1.0 - uHover * 0.04) + 0.5;
+    vec2 off = -n.xy * (0.05 + uHover * 0.05) * (0.35 + 0.65 * h) / uSize;
+    vec3 col = vec3(
+      texture2D(uTex, uv + off).r,
+      texture2D(uTex, uv + off * 1.07).g,
+      texture2D(uTex, uv + off * 1.15).b
+    ) * mix(0.86, 1.0, uHover) * vShade;
+
+    vec3 V = vec3(0.0, 0.0, 1.0);
+    vec3 warm = vec3(1.0, 0.94, 0.84);
+    col += pow(1.0 - n.z, 3.0) * 0.55 * warm;
+    col += pow(max(dot(n, normalize(uLight + V)), 0.0), 90.0) * 1.4 * warm;
+    col += pow(max(dot(n, normalize(uLight + V)), 0.0), 30.0) * 0.15;
+    col += (1.0 - smoothstep(0.0, 0.012, abs(d + 0.014))) * 0.22 * warm;
+    gl_FragColor = vec4(col, alpha);
     #include <colorspace_fragment>
   }
 `;
@@ -173,12 +174,15 @@ type Shared = {
   rectRef: { current: ((index: number) => DOMRect | null) | null };
   // Card currently shown in the detail page; it is hidden here while its image is "away".
   hidden: { current: string | null };
+  water: WaterControls;
+  orb: { current: OrbState };
 };
 
 // Uniform objects shared by every card, so the field and cursor are uploaded once per frame.
 type SharedUniforms = {
   uField: { value: Float32Array };
   uCursor: { value: THREE.Vector4 };
+  uLight: { value: THREE.Vector3 }; // light direction for the glass highlight, leans with the cursor
 };
 
 // Damped spring step; low damping gives the overshoot that makes motion feel squishy.
@@ -215,6 +219,7 @@ function Card({
           uSize: { value: new THREE.Vector2(W, H) },
           uField: common.uField,
           uCursor: common.uCursor,
+          uLight: common.uLight,
         },
       }),
     [project, common]
@@ -285,31 +290,14 @@ function Card({
   return (
     <group>
       <mesh geometry={geometry} material={material} frustumCulled={false} />
-      <mesh geometry={geometry} material={reflection} frustumCulled={false} renderOrder={-1} />
+      {/* Only drawn into the water's reflection pass. */}
+      <mesh
+        ref={(m) => m?.layers.set(REFLECTION_LAYER)}
+        geometry={geometry}
+        material={reflection}
+        frustumCulled={false}
+      />
     </group>
-  );
-}
-
-function Floor({ offset }: { offset: { current: number } }) {
-  const material = useMemo(
-    () =>
-      new THREE.ShaderMaterial({
-        vertexShader: floorVertex,
-        fragmentShader: floorFragment,
-        transparent: true,
-        depthWrite: false,
-        uniforms: { uOffset: { value: 0 }, uColor: { value: new THREE.Color(0.95, 0.93, 0.88) } },
-      }),
-    []
-  );
-  useEffect(() => () => material.dispose(), [material]);
-  useFrame(() => {
-    material.uniforms.uOffset.value = offset.current;
-  });
-  return (
-    <mesh rotation-x={-Math.PI / 2} position={[0, FLOOR_Y, 0]} material={material}>
-      <planeGeometry args={[2 * (R + 3), 2 * (R + 3)]} />
-    </mesh>
   );
 }
 
@@ -330,12 +318,19 @@ function Scene({
   const raycaster = useMemo(() => new THREE.Raycaster(), []);
 
   const common = useMemo<SharedUniforms>(
-    () => ({ uField: { value: new Float32Array(FIELD) }, uCursor: { value: new THREE.Vector4() } }),
+    () => ({
+      uField: { value: new Float32Array(FIELD) },
+      uCursor: { value: new THREE.Vector4() },
+      uLight: { value: new THREE.Vector3(-0.45, 0.6, 0.65).normalize() },
+    }),
     []
   );
   const sim = useMemo(() => ({ d: new Float32Array(FIELD), v: new Float32Array(FIELD) }), []);
   const cursor = useRef({ a: { x: 0, v: 0 }, y: { x: 0, v: 0 }, s: { x: 0, v: 0 } });
   const cam = useRef({ x: { x: 0, v: 0 }, y: { x: 0, v: 0 } });
+  const gold = useMemo(() => new THREE.Color().setRGB(0.89, 0.76, 0.45, THREE.SRGBColorSpace), []);
+  const deep = useMemo(() => new THREE.Color().setRGB(0.05, 0.045, 0.038, THREE.SRGBColorSpace), []);
+  const floorHit = useMemo(() => new THREE.Vector2(), []);
 
   // Ray against the cylinder (vertices move in the shader, so mesh raycasting can't be used).
   const cast = useCallback(
@@ -433,6 +428,21 @@ function Scene({
     spring(cam.current.y, ndc ? ndc.y * 0.2 : 0, 30, 9, dt);
     camera.position.set(cam.current.x.x, cam.current.y.x, CAM_Z);
     camera.lookAt(0, 0, -R);
+    // The glass highlight slides as the cursor moves, like light across a real pane.
+    common.uLight.value.set(-0.45 + (ndc?.x ?? 0) * 0.35, 0.6 + (ndc?.y ?? 0) * 0.25, 0.65).normalize();
+
+    // Water: where the cursor touches the pool (below the cards), and how fast the strip moves.
+    shared.water.speed.current = speed;
+    shared.water.pointer.current = null;
+    if (ndc && hovered < 0) {
+      raycaster.setFromCamera(ndc, camera);
+      const { origin: o, direction: d } = raycaster.ray;
+      if (d.y < -1e-3) {
+        const t = (FLOOR_Y - o.y) / d.y;
+        floorHit.set(o.x + d.x * t, o.z + d.z * t);
+        if (floorHit.length() < R - 0.2) shared.water.pointer.current = floorHit;
+      }
+    }
 
     group.current?.children.forEach((child, i) => {
       // uS is shared by the card and its reflection, so setting it on one moves both.
@@ -451,7 +461,7 @@ function Scene({
 
   return (
     <>
-      <Floor offset={position} />
+      <WaterFloor y={FLOOR_Y} offset={position} controls={shared.water} gold={gold} deep={deep} />
       <group ref={group}>
         {works.map((p, i) => (
           <Card key={p.id} project={p} index={i} shared={shared} common={common} />
@@ -482,13 +492,15 @@ export default function WorksGallery3D({
     pickRef: { current: null },
     rectRef: { current: null },
     hidden: { current: null },
+    water: { pointer: { current: null }, speed: { current: 0 }, dropAt: { current: null }, pour: { current: null } },
+    orb: { current: { x: 0, y: 0, vx: 0, vy: 0, visible: false, mode: "drag" } },
   }).current;
   shared.hidden.current = openId;
   const open = (i: number) => onOpen(works[i], shared.rectRef.current?.(i) ?? null);
   const drag = useRef<{ x: number; moved: number } | null>(null);
   const [dragging, setDragging] = useState(false);
+  shared.orb.current.mode = dragging ? "dragging" : hovering ? "view" : "drag";
   const cursorEl = useRef<HTMLDivElement>(null);
-  const ringEl = useRef<HTMLDivElement>(null);
   const cursorTarget = useRef<{ x: number; y: number } | null>(null);
   const maxArc = (works.length - 1) * SPACING;
 
@@ -522,7 +534,8 @@ export default function WorksGallery3D({
     return () => io.disconnect();
   }, []);
 
-  // Label cursor: follows the pointer on a spring and stretches along its direction of travel.
+  // Cursor: follows the pointer on a spring. The glass orb itself is drawn in WebGL
+  // (GlassOrb); this loop moves its label and tells the orb where it is and how fast it moves.
   useEffect(() => {
     const x = { x: 0, v: 0 };
     const y = { x: 0, v: 0 };
@@ -533,7 +546,7 @@ export default function WorksGallery3D({
       const dt = Math.min((now - last) / 1000, 1 / 30);
       last = now;
       const t = cursorTarget.current;
-      if (t && cursorEl.current && ringEl.current) {
+      if (t && cursorEl.current) {
         if (!placed) {
           x.x = t.x;
           y.x = t.y;
@@ -541,20 +554,37 @@ export default function WorksGallery3D({
         }
         spring(x, t.x, 260, 24, dt);
         spring(y, t.y, 260, 24, dt);
-        const speed = Math.hypot(x.v, y.v);
-        const stretch = Math.min(speed / 2500, 0.35);
         cursorEl.current.style.transform = `translate(${x.x}px, ${y.x}px)`;
         cursorEl.current.style.opacity = "1";
-        ringEl.current.style.transform = `rotate(${Math.atan2(y.v, x.v)}rad) scale(${1 + stretch}, ${1 - stretch * 0.6})`;
+        Object.assign(shared.orb.current, { x: x.x, y: y.x, vx: x.v, vy: y.v, visible: true });
       } else {
         placed = false;
+        shared.orb.current.visible = false;
         if (cursorEl.current) cursorEl.current.style.opacity = "0";
       }
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, []);
+  }, [shared]);
+
+  // The first time the gallery comes into view, gold pours into the pool.
+  const poured = useRef(false);
+  useEffect(() => {
+    if (!inView || poured.current) return;
+    let tries = 0;
+    const id = setInterval(() => {
+      const pour = shared.water.pour.current;
+      if (pour || ++tries > 20) {
+        clearInterval(id);
+        if (pour) {
+          poured.current = true;
+          pour();
+        }
+      }
+    }, 150);
+    return () => clearInterval(id);
+  }, [inView, shared]);
 
   const goTo = useCallback(
     (i: number) => {
@@ -594,6 +624,11 @@ export default function WorksGallery3D({
     if (wasClick) {
       const i = shared.pickRef.current?.(toNdc(e)) ?? -1;
       if (i >= 0) open(i);
+      else if (shared.water.pointer.current) {
+        // A click on the water lets a gold drop fall there.
+        const { x, y } = shared.water.pointer.current;
+        shared.water.dropAt.current?.(x, y);
+      }
     }
   };
 
@@ -624,25 +659,11 @@ export default function WorksGallery3D({
             ref={cursorEl}
             className="pointer-events-none absolute left-0 top-0 z-10 opacity-0 transition-opacity duration-200"
           >
-            <div
-              className={`absolute flex items-center justify-center transition-[width,height,margin] duration-300 ease-out ${
-                hovering && !dragging
-                  ? "-ml-11 -mt-11 size-22"
-                  : dragging
-                    ? "-ml-7 -mt-7 size-14"
-                    : "-ml-9 -mt-9 size-18"
-              }`}
+            <span
+              className="absolute -translate-x-1/2 -translate-y-1/2 font-mono text-[13px] font-medium text-ink [text-shadow:0_1px_8px_rgb(0_0_0/0.8)]"
             >
-              <div
-                ref={ringEl}
-                className={`absolute inset-0 rounded-full transition-colors duration-300 ${
-                  hovering && !dragging ? "bg-gold" : "bg-ink"
-                }`}
-              />
-              <span className="relative font-mono text-[13px] font-medium text-gold-ink">
-                {hovering && !dragging ? "View" : "Drag"}
-              </span>
-            </div>
+              {hovering && !dragging ? "View" : "Drag"}
+            </span>
           </div>
           <Canvas
             flat
@@ -652,6 +673,7 @@ export default function WorksGallery3D({
             gl={{ antialias: true, alpha: true }}
           >
             <Scene works={works} shared={shared} onIndex={setIndex} />
+            <GlassOrb orb={shared.orb} />
           </Canvas>
         </div>
 

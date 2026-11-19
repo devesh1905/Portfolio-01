@@ -1,4 +1,5 @@
 import Nav from "@/components/Nav";
+import LiquidPipe from "@/components/LiquidPipe";
 import Header from "@/components/Header";
 import WorksSection from "@/components/Works/WorksSection";
 import Skills from "@/components/Skills";
@@ -15,6 +16,7 @@ export default function PortfolioPage() {
         Skip to work
       </a>
       <Nav />
+      <LiquidPipe />
       <main>
         <Header />
         <WorksSection />
